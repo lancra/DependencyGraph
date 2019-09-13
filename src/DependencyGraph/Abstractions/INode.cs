@@ -25,5 +25,15 @@ namespace DependencyGraph.Abstractions
         /// Gets the nodes adjacent to the current <see cref="INode{T}"/>.
         /// </summary>
         IReadOnlyCollection<INode<T>> AdjacentNodes { get; }
+
+        /// <summary>
+        /// Adds an adjacent node to the source <see cref="INode{T}"/> if it does not already exist.
+        /// </summary>
+        /// <param name="node">The adjacent <see cref="INode{T}"/> to add.</param>
+        /// <returns>
+        /// The node. This will either be the existing node if it is already in the source <see cref="INode{T}"/>,
+        /// or the new node if it was not in the source <see cref="INode{T}"/>.
+        /// </returns>
+        INode<T> GetOrAddAdjacentNode(INode<T> node);
     }
 }
