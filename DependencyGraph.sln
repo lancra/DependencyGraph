@@ -3,7 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyGraph", "src\DependencyGraph\DependencyGraph.csproj", "{53FF4BFD-694C-4278-8268-985737A2401C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyGraph.Tests", "test\DependencyGraph.Tests\DependencyGraph.Tests.csproj", "{8AC2E926-B646-4AAC-941F-D94DB3E5A559}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53FF4BFD-694C-4278-8268-985737A2401C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53FF4BFD-694C-4278-8268-985737A2401C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53FF4BFD-694C-4278-8268-985737A2401C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53FF4BFD-694C-4278-8268-985737A2401C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AC2E926-B646-4AAC-941F-D94DB3E5A559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AC2E926-B646-4AAC-941F-D94DB3E5A559}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AC2E926-B646-4AAC-941F-D94DB3E5A559}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AC2E926-B646-4AAC-941F-D94DB3E5A559}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
