@@ -19,7 +19,7 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)xunit.runner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <PackageReference Include="Moq.AutoMocker" Version="1.2.0.120" />
+    <PackageReference Include="Moq.AutoMock" Version="1.2.0.120" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="Moq" Version="4.13.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
