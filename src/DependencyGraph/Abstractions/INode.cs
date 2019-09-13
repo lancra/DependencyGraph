@@ -20,5 +20,10 @@ namespace DependencyGraph.Abstractions
         /// Gets the value of the <see cref="INode{T}"/>.
         /// </summary>
         T Value { get; }
+
+        /// <summary>
+        /// Gets the nodes adjacent to the current <see cref="INode{T}"/>.
+        /// </summary>
+        IReadOnlyCollection<INode<T>> AdjacentNodes { get; }
     }
 }
