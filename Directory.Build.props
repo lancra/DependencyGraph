@@ -2,7 +2,7 @@
 <Project>
 
   <PropertyGroup>
-    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)seat.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)DependencyGraph.ruleset</CodeAnalysisRuleSet>
     <IsTestProject Condition="$(MSBuildProjectName.EndsWith('Tests')) OR $(MSBuildProjectName.EndsWith('.Test'))">true</IsTestProject>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
