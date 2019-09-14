@@ -57,5 +57,37 @@ namespace DependencyGraph.Tests
             Assert.NotNull(exception);
             Assert.IsType<InvalidOperationException>(exception);
         }
+
+        [Fact]
+        public void AddAdjacentNode_NewNode_IncrementsInDegreeOfDestinationNode()
+        {
+            // Arrange
+            var node = new Node<string>("bar");
+            var sut = new Node<string>("foo");
+
+            // Act
+            sut.AddAdjacentNode(node);
+
+            // Assert
+            Assert.Equal(1, node.InDegree);
+        }
+
+        [Fact]
+        public void AddAdjacentNode_ExistingNode_DoesNotIncrementInDegreeOfDestinationNode()
+        {
+            // Arrange
+            var node = new Node<string>("bar");
+
+            var sut = new Node<string>("foo");
+            sut.AddAdjacentNode(new Node<string>("bar"));
+
+            var inDegree = node.InDegree;
+
+            // Act
+            sut.AddAdjacentNode(node);
+
+            // Assert
+            Assert.Equal(inDegree, node.InDegree);
+        }
     }
 }

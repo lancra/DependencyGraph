@@ -23,6 +23,8 @@ namespace DependencyGraph
 
         public T Value { get; }
 
+        public int InDegree { get; set; }
+
         public IReadOnlyCollection<INode<T>> AdjacentNodes => _adjacentNodes.Values.ToArray();
 
         public void AddAdjacentNode(INode<T> node)
@@ -35,6 +37,7 @@ namespace DependencyGraph
             if (!_adjacentNodes.ContainsKey(node.Value))
             {
                 _adjacentNodes.Add(node.Value, node);
+                node.InDegree++;
             }
         }
     }

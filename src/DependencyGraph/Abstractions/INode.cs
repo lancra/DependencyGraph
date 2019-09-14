@@ -22,6 +22,11 @@ namespace DependencyGraph.Abstractions
         T Value { get; }
 
         /// <summary>
+        /// Gets or sets the number of nodes coming into the <see cref="INode{T}"/>.
+        /// </summary>
+        int InDegree { get; set; }
+
+        /// <summary>
         /// Gets the nodes adjacent to the current <see cref="INode{T}"/>.
         /// </summary>
         IReadOnlyCollection<INode<T>> AdjacentNodes { get; }
