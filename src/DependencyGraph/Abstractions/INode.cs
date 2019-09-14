@@ -30,10 +30,10 @@ namespace DependencyGraph.Abstractions
         /// Adds an adjacent node to the source <see cref="INode{T}"/> if it does not already exist.
         /// </summary>
         /// <param name="node">The adjacent <see cref="INode{T}"/> to add.</param>
-        /// <returns>
-        /// The node. This will either be the existing node if it is already in the source <see cref="INode{T}"/>,
-        /// or the new node if it was not in the source <see cref="INode{T}"/>.
-        /// </returns>
-        INode<T> GetOrAddAdjacentNode(INode<T> node);
+        /// <exception cref="InvalidOperationException">
+        /// Thrown when the value of the destination <paramref name="node"/>
+        /// is equal to the value of the source <see cref="INode{T}"/>.
+        /// </exception>
+        void AddAdjacentNode(INode<T> node);
     }
 }

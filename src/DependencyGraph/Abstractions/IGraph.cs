@@ -36,7 +36,10 @@ namespace DependencyGraph.Abstractions
         /// </summary>
         /// <param name="source">The source node.</param>
         /// <returns>The adjacent nodes.</returns>
-        IReadOnlyCollection<INode<T>> GetAdjacentNodes(T source);
+        /// <exception cref="InvalidOperationException">
+        /// Thrown when the <paramref name="source"/> node is not present in the <see cref="IGraph{T}"/>.
+        /// </exception>
+        IReadOnlyCollection<T> GetAdjacentNodes(T source);
 
         /// <summary>
         /// Adds a directed edge between two nodes.
