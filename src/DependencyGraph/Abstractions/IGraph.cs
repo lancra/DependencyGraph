@@ -47,5 +47,11 @@ namespace DependencyGraph.Abstractions
         /// <param name="source">The source node.</param>
         /// <param name="destination">The destination node.</param>
         void AddEdge(T source, T destination);
+
+        /// <summary>
+        /// Determines whether the nodes in the <see cref="IGraph{T}"/> for a cycle.
+        /// </summary>
+        /// <returns><c>true</c> if the <see cref="IGraph{T}"/> contains a cycle; otherwise, <c>false</c>.</returns>
+        bool HasCycle();
     }
 }

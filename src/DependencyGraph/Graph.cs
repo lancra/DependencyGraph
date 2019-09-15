@@ -44,6 +44,9 @@ namespace DependencyGraph
             sourceNode.AddAdjacentNode(destinationNode);
         }
 
+        public bool HasCycle()
+            => !_nodes.Values.Any(n => n.InDegree == 0);
+
         private INode<T> InternalGetOrAddNode(T value)
         {
             if (!_nodes.TryGetValue(value, out var node))

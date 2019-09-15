@@ -168,5 +168,37 @@ namespace DependencyGraph.Tests
             var adjacentNode = Assert.Single(adjacentNodes);
             Assert.Equal(destination, adjacentNode);
         }
+
+        [Fact]
+        public void HasCycle_GraphContainsCycle_ReturnsTrue()
+        {
+            // Arrange
+            var sut = new Graph<string>();
+            sut.AddEdge("foo", "bar");
+            sut.AddEdge("bar", "baz");
+            sut.AddEdge("baz", "foo");
+
+            // Act
+            var hasCycle = sut.HasCycle();
+
+            // Assert
+            Assert.True(hasCycle);
+        }
+
+        [Fact]
+        public void HasCycle_GraphDoesNotContainCycle_ReturnsFalse()
+        {
+            // Arrange
+            var sut = new Graph<string>();
+            sut.AddEdge("foo", "bar");
+            sut.AddEdge("foo", "baz");
+            sut.AddEdge("bar", "baz");
+
+            // Act
+            var hasCycle = sut.HasCycle();
+
+            // Assert
+            Assert.False(hasCycle);
+        }
     }
 }
