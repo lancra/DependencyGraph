@@ -16,10 +16,12 @@ namespace DependencyGraph
     {
         public Cycle(IEnumerable<INode<T>> nodes)
         {
-            Nodes = nodes.ToArray();
+            Nodes = nodes
+                .Select(node => node.Value)
+                .ToArray();
         }
 
-        public IReadOnlyCollection<INode<T>> Nodes { get; }
+        public IReadOnlyCollection<T> Nodes { get; }
 
         public override string ToString()
             => "\"" + string.Join("\" -> \"", Nodes) + "\"";
