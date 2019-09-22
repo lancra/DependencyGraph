@@ -47,9 +47,9 @@ namespace DependencyGraph.Tests
             // Assert
             var cycle = Assert.Single(cycles);
             Assert.Equal(3, cycle.Nodes.Count);
-            Assert.Single(cycle.Nodes, n => n.Value == node1.Value);
-            Assert.Single(cycle.Nodes, n => n.Value == node2.Value);
-            Assert.Single(cycle.Nodes, n => n.Value == node3.Value);
+            Assert.Single(cycle.Nodes, n => n == node1.Value);
+            Assert.Single(cycle.Nodes, n => n == node2.Value);
+            Assert.Single(cycle.Nodes, n => n == node3.Value);
         }
 
         [Fact]
@@ -86,13 +86,13 @@ namespace DependencyGraph.Tests
 
             var cycle1 = cycles.First();
             Assert.Equal(2, cycle1.Nodes.Count);
-            Assert.Single(cycle1.Nodes, n => n.Value == node1.Value);
-            Assert.Single(cycle1.Nodes, n => n.Value == node2.Value);
+            Assert.Single(cycle1.Nodes, n => n == node1.Value);
+            Assert.Single(cycle1.Nodes, n => n == node2.Value);
 
             var cycle2 = cycles.Last();
             Assert.Equal(2, cycle2.Nodes.Count);
-            Assert.Single(cycle2.Nodes, n => n.Value == node3.Value);
-            Assert.Single(cycle2.Nodes, n => n.Value == node4.Value);
+            Assert.Single(cycle2.Nodes, n => n == node3.Value);
+            Assert.Single(cycle2.Nodes, n => n == node4.Value);
         }
 
         [Fact]
@@ -141,19 +141,19 @@ namespace DependencyGraph.Tests
 
             var cycle1 = cycles.ElementAt(0);
             Assert.Equal(3, cycle1.Nodes.Count);
-            Assert.Single(cycle1.Nodes, n => n.Value == node1.Value);
-            Assert.Single(cycle1.Nodes, n => n.Value == node2.Value);
-            Assert.Single(cycle1.Nodes, n => n.Value == node3.Value);
+            Assert.Single(cycle1.Nodes, n => n == node1.Value);
+            Assert.Single(cycle1.Nodes, n => n == node2.Value);
+            Assert.Single(cycle1.Nodes, n => n == node3.Value);
 
             var cycle2 = cycles.ElementAt(1);
             Assert.Equal(2, cycle2.Nodes.Count);
-            Assert.Single(cycle2.Nodes, n => n.Value == node6.Value);
-            Assert.Single(cycle2.Nodes, n => n.Value == node7.Value);
+            Assert.Single(cycle2.Nodes, n => n == node6.Value);
+            Assert.Single(cycle2.Nodes, n => n == node7.Value);
 
             var cycle3 = cycles.ElementAt(2);
             Assert.Equal(2, cycle3.Nodes.Count);
-            Assert.Single(cycle3.Nodes, n => n.Value == node4.Value);
-            Assert.Single(cycle3.Nodes, n => n.Value == node5.Value);
+            Assert.Single(cycle3.Nodes, n => n == node4.Value);
+            Assert.Single(cycle3.Nodes, n => n == node5.Value);
         }
 
         [Fact]
