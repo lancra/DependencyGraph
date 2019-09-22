@@ -53,5 +53,11 @@ namespace DependencyGraph.Abstractions
         /// </summary>
         /// <returns><c>true</c> if the <see cref="IGraph{T}"/> contains a cycle; otherwise, <c>false</c>.</returns>
         bool HasCycle();
+
+        /// <summary>
+        /// Gets the strongly-connected cycles in the <see cref="IGraph{T}"/>.
+        /// </summary>
+        /// <returns>The <see cref="Cycle{T}"/> collection.</returns>
+        IReadOnlyCollection<Cycle<T>> GetCycles();
     }
 }

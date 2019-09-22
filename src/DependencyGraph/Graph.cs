@@ -15,6 +15,12 @@ namespace DependencyGraph
         where T : IEquatable<T>
     {
         private readonly IDictionary<T, INode<T>> _nodes = new Dictionary<T, INode<T>>();
+        private readonly ICycleDetector<T> _cycleDetector;
+
+        public Graph(ICycleDetector<T> cycleDetector)
+        {
+            _cycleDetector = cycleDetector;
+        }
 
         public IReadOnlyCollection<T> Nodes => _nodes.Keys.ToArray();
 
@@ -46,6 +52,9 @@ namespace DependencyGraph
 
         public bool HasCycle()
             => !_nodes.Values.Any(n => n.InDegree == 0);
+
+        public IReadOnlyCollection<Cycle<T>> GetCycles()
+            => _cycleDetector.DetectCycles(_nodes.Values);
 
         private INode<T> InternalGetOrAddNode(T value)
         {
