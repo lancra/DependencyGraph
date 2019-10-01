@@ -4,6 +4,7 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
+using System;
 using System.Linq;
 using DependencyGraph.Abstractions;
 using DependencyGraph.Tests.Testing;
@@ -15,6 +16,37 @@ namespace DependencyGraph.Tests
 {
     public class CycleDetectorTests
     {
+        [Fact]
+        public void DetectCycles_NodesIsNull_ThrowArgumentNullException()
+        {
+            // Arrange
+            var mocker = new AutoMocker(MockBehavior.Loose);
+
+            var sut = mocker.CreateInstance<CycleDetector<string>>();
+
+            // Act
+            var exception = Record.Exception(() => sut.DetectCycles(default));
+
+            // Assert
+            Assert.NotNull(exception);
+            Assert.IsType<ArgumentNullException>(exception);
+        }
+
+        [Fact]
+        public void DetectCycles_NodesIsEmpty_ReturnsEmptyCycles()
+        {
+            // Arrange
+            var mocker = new AutoMocker(MockBehavior.Loose);
+
+            var sut = mocker.CreateInstance<CycleDetector<string>>();
+
+            // Act
+            var cycles = sut.DetectCycles(new DummyNode<string>[0]);
+
+            // Assert
+            Assert.Empty(cycles);
+        }
+
         [Fact]
         public void DetectCycles_HasCycleOfNodes_ReturnsCycles()
         {

@@ -16,6 +16,8 @@ namespace DependencyGraph
     {
         public IReadOnlyCollection<Cycle<T>> DetectCycles(IEnumerable<INode<T>> nodes)
         {
+            Guard.NotNull(nodes, nameof(nodes));
+
             var cycles = new List<Cycle<T>>();
 
             var cycleTrackers = nodes.ToDictionary(node => node.Value, _ => new CycleTracker());

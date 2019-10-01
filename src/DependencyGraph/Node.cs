@@ -29,6 +29,8 @@ namespace DependencyGraph
 
         public void AddAdjacentNode(INode<T> node)
         {
+            Guard.NotNull(node, nameof(node));
+
             if (node.Value.Equals(Value))
             {
                 throw new InvalidOperationException("A node cannot be adjacent to itself.");

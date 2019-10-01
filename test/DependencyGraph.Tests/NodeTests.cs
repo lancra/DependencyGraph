@@ -89,5 +89,20 @@ namespace DependencyGraph.Tests
             // Assert
             Assert.Equal(inDegree, node.InDegree);
         }
+
+        [Fact]
+        public void AddAdjacentNode_NullNode_ThrowsArgumentNullException()
+        {
+            // Arrange
+            var node = default(Node<string>);
+            var sut = new Node<string>("foo");
+
+            // Act
+            var exception = Record.Exception(() => sut.AddAdjacentNode(node));
+
+            // Assert
+            Assert.NotNull(exception);
+            Assert.IsType<ArgumentNullException>(exception);
+        }
     }
 }
