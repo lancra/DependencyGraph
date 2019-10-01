@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DependencyGraph.Abstractions;
 using DependencyGraph.Tests.Testing;
 using Moq;
@@ -268,6 +269,109 @@ namespace DependencyGraph.Tests
 
             // Assert
             Assert.Equal(expecteds, actuals);
+        }
+
+        [Fact]
+        public void TopologicalSort_GraphHasCycle_ThrowsInvalidOperationException()
+        {
+            // Arrange
+            var mocker = new AutoMocker(MockBehavior.Loose);
+
+            var node1 = "foo";
+            var node2 = "bar";
+            var node3 = "baz";
+
+            var sut = mocker.CreateInstance<Graph<string>>();
+            sut.GetOrAddNode(node1);
+            sut.GetOrAddNode(node2);
+            sut.GetOrAddNode(node3);
+            sut.AddEdge(node1, node2);
+            sut.AddEdge(node2, node3);
+            sut.AddEdge(node3, node1);
+
+            // Act
+            var exception = Record.Exception(() => sut.TopologicalSort());
+
+            // Assert
+            Assert.NotNull(exception);
+            Assert.IsType<InvalidOperationException>(exception);
+        }
+
+        [Fact]
+        public void TopologicalSort_SimpleGraphDoesNotHaveCycle_ReturnsSortedNodes()
+        {
+            // Arrange
+            var mocker = new AutoMocker(MockBehavior.Loose);
+
+            var node1 = "foo";
+            var node2 = "bar";
+            var node3 = "baz";
+
+            var sut = mocker.CreateInstance<Graph<string>>();
+            sut.GetOrAddNode(node1);
+            sut.GetOrAddNode(node2);
+            sut.GetOrAddNode(node3);
+            sut.AddEdge(node1, node2);
+            sut.AddEdge(node1, node3);
+            sut.AddEdge(node2, node3);
+
+            // Act
+            var sortedNodes = sut.TopologicalSort();
+
+            // Assert
+            Assert.Equal(3, sortedNodes.Count);
+            Assert.Equal(node3, sortedNodes.ElementAt(0));
+            Assert.Equal(node2, sortedNodes.ElementAt(1));
+            Assert.Equal(node1, sortedNodes.ElementAt(2));
+        }
+
+        [Fact]
+        public void TopologicalSort_ComplexGraphDoesNotHaveCycle_ReturnsSortedNodes()
+        {
+            // Arrange
+            var mocker = new AutoMocker(MockBehavior.Loose);
+
+            var node1 = 1;
+            var node2 = 2;
+            var node3 = 3;
+            var node4 = 4;
+            var node5 = 5;
+            var node6 = 6;
+            var node7 = 7;
+
+            var sut = mocker.CreateInstance<Graph<int>>();
+            sut.GetOrAddNode(node1);
+            sut.GetOrAddNode(node2);
+            sut.GetOrAddNode(node3);
+            sut.GetOrAddNode(node4);
+            sut.GetOrAddNode(node5);
+            sut.GetOrAddNode(node6);
+            sut.GetOrAddNode(node7);
+            sut.AddEdge(node1, node2);
+            sut.AddEdge(node1, node3);
+            sut.AddEdge(node1, node4);
+            sut.AddEdge(node2, node4);
+            sut.AddEdge(node2, node5);
+            sut.AddEdge(node3, node6);
+            sut.AddEdge(node4, node3);
+            sut.AddEdge(node4, node6);
+            sut.AddEdge(node4, node7);
+            sut.AddEdge(node5, node4);
+            sut.AddEdge(node5, node7);
+            sut.AddEdge(node7, node6);
+
+            // Act
+            var sortedNodes = sut.TopologicalSort();
+
+            // Assert
+            Assert.Equal(7, sortedNodes.Count);
+            Assert.Equal(node6, sortedNodes.ElementAt(0));
+            Assert.Equal(node7, sortedNodes.ElementAt(1));
+            Assert.Equal(node3, sortedNodes.ElementAt(2));
+            Assert.Equal(node4, sortedNodes.ElementAt(3));
+            Assert.Equal(node5, sortedNodes.ElementAt(4));
+            Assert.Equal(node2, sortedNodes.ElementAt(5));
+            Assert.Equal(node1, sortedNodes.ElementAt(6));
         }
     }
 }

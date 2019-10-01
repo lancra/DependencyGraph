@@ -59,5 +59,11 @@ namespace DependencyGraph.Abstractions
         /// </summary>
         /// <returns>The <see cref="Cycle{T}"/> collection.</returns>
         IReadOnlyCollection<Cycle<T>> GetCycles();
+
+        /// <summary>
+        /// Performs a topological sort on the nodes in the <see cref="IGraph{T}"/>.
+        /// </summary>
+        /// <returns>The sorted nodes.</returns>
+        IReadOnlyCollection<T> TopologicalSort();
     }
 }

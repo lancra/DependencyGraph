@@ -56,6 +56,41 @@ namespace DependencyGraph
         public IReadOnlyCollection<Cycle<T>> GetCycles()
             => _cycleDetector.DetectCycles(_nodes.Values);
 
+        public IReadOnlyCollection<T> TopologicalSort()
+        {
+            if (HasCycle())
+            {
+                throw new InvalidOperationException($"Cannot perform a topological sort on a graph with cycles.");
+            }
+
+            var sortQueue = new Queue<INode<T>>();
+            foreach (var node in _nodes.Values)
+            {
+                if (node.InDegree == 0)
+                {
+                    sortQueue.Enqueue(node);
+                }
+            }
+
+            var sortedNodes = new List<T>();
+            while (sortQueue.Any())
+            {
+                var node = sortQueue.Dequeue();
+                sortedNodes.Add(node.Value);
+
+                foreach (var adjacentNode in node.AdjacentNodes)
+                {
+                    if ((adjacentNode.InDegree - 1) == 0)
+                    {
+                        sortQueue.Enqueue(adjacentNode);
+                    }
+                }
+            }
+
+            sortedNodes.Reverse();
+            return sortedNodes;
+        }
+
         private INode<T> InternalGetOrAddNode(T value)
         {
             if (!_nodes.TryGetValue(value, out var node))
