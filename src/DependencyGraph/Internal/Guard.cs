@@ -6,9 +6,9 @@
 
 using System;
 
-namespace DependencyGraph
+namespace DependencyGraph.Internal
 {
-    public static class Guard
+    internal static class Guard
     {
         public static void NotEmpty(string value, string parameterName)
         {

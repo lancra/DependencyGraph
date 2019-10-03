@@ -7,11 +7,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DependencyGraph.Abstractions;
+using DependencyGraph.Internal.Abstractions;
 
-namespace DependencyGraph
+namespace DependencyGraph.Internal
 {
-    public class Graph<T> : IGraph<T>
+    internal class Graph<T> : IGraph<T>
         where T : IEquatable<T>
     {
         private readonly IDictionary<T, INode<T>> _nodes = new Dictionary<T, INode<T>>();

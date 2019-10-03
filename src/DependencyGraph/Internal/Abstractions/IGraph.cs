@@ -7,13 +7,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace DependencyGraph.Abstractions
+namespace DependencyGraph.Internal.Abstractions
 {
     /// <summary>
     /// Defines a graph.
     /// </summary>
     /// <typeparam name="T">The value type of the child nodes.</typeparam>
-    public interface IGraph<T>
+    internal interface IGraph<T>
         where T : IEquatable<T>
     {
         /// <summary>

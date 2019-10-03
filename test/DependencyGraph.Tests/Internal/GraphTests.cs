@@ -7,13 +7,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DependencyGraph.Abstractions;
+using DependencyGraph.Internal;
+using DependencyGraph.Internal.Abstractions;
 using DependencyGraph.Tests.Testing;
 using Moq;
 using Moq.AutoMock;
 using Xunit;
 
-namespace DependencyGraph.Tests
+namespace DependencyGraph.Tests.Internal
 {
     public class GraphTests
     {
@@ -32,40 +33,6 @@ namespace DependencyGraph.Tests
                     {
                         "bar",
                         "baz",
-                    }
-                },
-            };
-
-        public static TheoryData<IReadOnlyCollection<Cycle<string>>> GetCycles_ForCycleDetectorOutput_Data
-            => new TheoryData<IReadOnlyCollection<Cycle<string>>>
-            {
-                { new Cycle<string>[0] },
-                {
-                    new[]
-                    {
-                        new Cycle<string>(
-                            new[]
-                            {
-                                new DummyNode<string>("1"),
-                                new DummyNode<string>("2"),
-                            }),
-                    }
-                },
-                {
-                    new[]
-                    {
-                        new Cycle<string>(
-                            new[]
-                            {
-                                new DummyNode<string>("1"),
-                                new DummyNode<string>("2"),
-                            }),
-                        new Cycle<string>(
-                            new[]
-                            {
-                                new DummyNode<string>("3"),
-                                new DummyNode<string>("4"),
-                            }),
                     }
                 },
             };
@@ -251,24 +218,32 @@ namespace DependencyGraph.Tests
             Assert.False(hasCycle);
         }
 
-        [Theory]
-        [MemberData(nameof(GetCycles_ForCycleDetectorOutput_Data))]
-        public void GetCycles_ForCycleDetectorOutput_ReturnsDetectedCycles(IReadOnlyCollection<Cycle<string>> expecteds)
+        [Fact]
+        public void GetCycles_ForCycleDetectorOutput_ReturnsDetectedCycles()
         {
             // Arrange
             var mocker = new AutoMocker(MockBehavior.Loose);
 
+            var expectedCycles = new[]
+            {
+                new Cycle<string>(
+                    new[]
+                    {
+                        new DummyNode<string>("1"),
+                        new DummyNode<string>("2"),
+                    }),
+            };
             mocker.GetMock<ICycleDetector<string>>()
                 .Setup(cycleDetector => cycleDetector.DetectCycles(It.IsAny<IEnumerable<INode<string>>>()))
-                .Returns(expecteds);
+                .Returns(expectedCycles);
 
             var sut = mocker.CreateInstance<Graph<string>>();
 
             // Act
-            var actuals = sut.GetCycles();
+            var actualCycles = sut.GetCycles();
 
             // Assert
-            Assert.Equal(expecteds, actuals);
+            Assert.Equal(expectedCycles, actualCycles);
         }
 
         [Fact]

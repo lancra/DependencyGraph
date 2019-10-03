@@ -7,13 +7,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace DependencyGraph.Abstractions
+namespace DependencyGraph.Internal.Abstractions
 {
     /// <summary>
     /// Defines a node on a <see cref="IGraph{T}"/>.
     /// </summary>
     /// <typeparam name="T">The value type of the <see cref="INode{T}"/>.</typeparam>
-    public interface INode<T>
+    internal interface INode<T>
         where T : IEquatable<T>
     {
         /// <summary>

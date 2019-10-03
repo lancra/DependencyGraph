@@ -7,11 +7,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DependencyGraph.Abstractions;
+using DependencyGraph.Internal.Abstractions;
 
-namespace DependencyGraph
+namespace DependencyGraph.Internal
 {
-    public class Cycle<T>
+    internal class Cycle<T>
         where T : IEquatable<T>
     {
         public Cycle(IEnumerable<INode<T>> nodes)

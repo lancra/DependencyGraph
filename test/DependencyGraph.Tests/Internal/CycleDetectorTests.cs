@@ -6,13 +6,14 @@
 
 using System;
 using System.Linq;
-using DependencyGraph.Abstractions;
+using DependencyGraph.Internal;
+using DependencyGraph.Internal.Abstractions;
 using DependencyGraph.Tests.Testing;
 using Moq;
 using Moq.AutoMock;
 using Xunit;
 
-namespace DependencyGraph.Tests
+namespace DependencyGraph.Tests.Internal
 {
     public class CycleDetectorTests
     {

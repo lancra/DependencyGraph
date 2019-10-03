@@ -7,12 +7,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using DependencyGraph.Abstractions;
+using DependencyGraph.Internal.Abstractions;
 
 namespace DependencyGraph.Tests.Testing
 {
     [DebuggerDisplay("Value = {Value}")]
-    public class DummyNode<T> : INode<T>
+    internal class DummyNode<T> : INode<T>
         where T : IEquatable<T>
     {
         public DummyNode(T value)

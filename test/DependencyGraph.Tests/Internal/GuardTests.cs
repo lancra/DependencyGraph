@@ -5,9 +5,10 @@
 // -------------------------------------------------------------------------------------------------
 
 using System;
+using DependencyGraph.Internal;
 using Xunit;
 
-namespace DependencyGraph.Tests
+namespace DependencyGraph.Tests.Internal
 {
     public class GuardTests
     {
