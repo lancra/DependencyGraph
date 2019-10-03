@@ -73,6 +73,7 @@ namespace DependencyGraph
             }
 
             var sortedNodes = new List<T>();
+            var inDegrees = _nodes.Values.ToDictionary(node => node.Value, node => node.InDegree);
             while (sortQueue.Any())
             {
                 var node = sortQueue.Dequeue();
@@ -80,7 +81,9 @@ namespace DependencyGraph
 
                 foreach (var adjacentNode in node.AdjacentNodes)
                 {
-                    if ((adjacentNode.InDegree - 1) == 0)
+                    inDegrees[adjacentNode.Value]--;
+
+                    if (inDegrees[adjacentNode.Value] == 0)
                     {
                         sortQueue.Enqueue(adjacentNode);
                     }
