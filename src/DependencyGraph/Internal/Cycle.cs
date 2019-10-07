@@ -24,6 +24,6 @@ namespace DependencyGraph.Internal
         public IReadOnlyCollection<T> Nodes { get; }
 
         public override string ToString()
-            => "\"" + string.Join("\" -> \"", Nodes) + "\"";
+            => "'" + string.Join("' -> '", Nodes) + "'";
     }
 }
