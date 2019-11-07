@@ -5,12 +5,12 @@
 // -------------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using DependencyGraph.Internal;
-using DependencyGraph.Internal.Abstractions;
-using DependencyGraph.Tests.Testing;
+using LanceC.DependencyGraph.Internal;
+using LanceC.DependencyGraph.Internal.Abstractions;
+using LanceC.DependencyGraph.Tests.Testing;
 using Xunit;
 
-namespace DependencyGraph.Tests.Internal
+namespace LanceC.DependencyGraph.Tests.Internal
 {
     public class CycleTests
     {

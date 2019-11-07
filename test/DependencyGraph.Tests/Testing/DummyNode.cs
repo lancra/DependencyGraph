@@ -7,9 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using DependencyGraph.Internal.Abstractions;
+using LanceC.DependencyGraph.Internal.Abstractions;
 
-namespace DependencyGraph.Tests.Testing
+namespace LanceC.DependencyGraph.Tests.Testing
 {
     [DebuggerDisplay("Value = {Value}")]
     internal class DummyNode<T> : INode<T>

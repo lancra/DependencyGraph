@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DependencyGraph.Internal.Abstractions
+namespace LanceC.DependencyGraph.Internal.Abstractions
 {
     /// <summary>
     /// Defines a graph.

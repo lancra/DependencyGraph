@@ -4,15 +4,15 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-using DependencyGraph.Internal;
-using DependencyGraph.Internal.Abstractions;
+using LanceC.DependencyGraph.Internal;
+using LanceC.DependencyGraph.Internal.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DependencyGraph
+namespace LanceC.DependencyGraph
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddDependencyGraph(this IServiceCollection services)
+        public static IServiceCollection DependencyGraph(this IServiceCollection services)
             => services
             .AddTransient(typeof(ICycleDetector<>), typeof(CycleDetector<>))
             .AddTransient(typeof(IGraphFactory<>), typeof(GraphFactory<>))

@@ -6,13 +6,13 @@
 
 using System;
 using System.Threading.Tasks;
-using DependencyGraph.Internal.Abstractions;
-using DependencyGraph.Tests.Testing;
+using LanceC.DependencyGraph.Internal.Abstractions;
+using LanceC.DependencyGraph.Tests.Testing;
 using Moq;
 using Moq.AutoMock;
 using Xunit;
 
-namespace DependencyGraph.Tests
+namespace LanceC.DependencyGraph.Tests
 {
     public class DependencyExecutionEngineTests
     {

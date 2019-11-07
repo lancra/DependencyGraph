@@ -5,10 +5,10 @@
 // -------------------------------------------------------------------------------------------------
 
 using System;
-using DependencyGraph.Internal;
+using LanceC.DependencyGraph.Internal;
 using Xunit;
 
-namespace DependencyGraph.Tests.Internal
+namespace LanceC.DependencyGraph.Tests.Internal
 {
     public class NodeTests
     {

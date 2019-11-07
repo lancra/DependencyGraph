@@ -6,7 +6,7 @@
 
 using System;
 
-namespace DependencyGraph.Internal.Abstractions
+namespace LanceC.DependencyGraph.Internal.Abstractions
 {
     /// <summary>
     /// Defines the interface for creating a <see cref="IGraph{T}"/>.

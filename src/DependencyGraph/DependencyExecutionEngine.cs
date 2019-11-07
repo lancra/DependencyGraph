@@ -8,9 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DependencyGraph.Internal.Abstractions;
+using LanceC.DependencyGraph.Internal.Abstractions;
 
-namespace DependencyGraph
+namespace LanceC.DependencyGraph
 {
     internal class DependencyExecutionEngine<T> : IDependencyExecutionEngine<T>
         where T : IEquatable<T>

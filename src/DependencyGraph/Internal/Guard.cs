@@ -6,7 +6,7 @@
 
 using System;
 
-namespace DependencyGraph.Internal
+namespace LanceC.DependencyGraph.Internal
 {
     internal static class Guard
     {

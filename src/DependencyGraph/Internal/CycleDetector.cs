@@ -7,9 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DependencyGraph.Internal.Abstractions;
+using LanceC.DependencyGraph.Internal.Abstractions;
 
-namespace DependencyGraph.Internal
+namespace LanceC.DependencyGraph.Internal
 {
     internal class CycleDetector<T> : ICycleDetector<T>
         where T : IEquatable<T>

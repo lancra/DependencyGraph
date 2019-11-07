@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\DependencyGraph\DependencyGraph.csproj" />
+    <ProjectReference Include="..\..\src\DependencyGraph\LanceC.DependencyGraph.csproj" />
   </ItemGroup>
 
 </Project>

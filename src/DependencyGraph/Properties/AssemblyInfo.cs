@@ -6,5 +6,5 @@
 
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("DependencyGraph.Tests")]
+[assembly: InternalsVisibleTo("LanceC.DependencyGraph.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

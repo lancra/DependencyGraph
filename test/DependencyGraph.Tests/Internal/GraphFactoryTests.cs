@@ -4,12 +4,12 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
-using DependencyGraph.Internal;
+using LanceC.DependencyGraph.Internal;
 using Moq;
 using Moq.AutoMock;
 using Xunit;
 
-namespace DependencyGraph.Tests.Internal
+namespace LanceC.DependencyGraph.Tests.Internal
 {
     public class GraphFactoryTests
     {

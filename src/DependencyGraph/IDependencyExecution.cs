@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DependencyGraph
+namespace LanceC.DependencyGraph
 {
     /// <summary>
     /// Defines the interface for an execution in a depedency graph.

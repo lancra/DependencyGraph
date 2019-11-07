@@ -8,7 +8,7 @@ using System;
 using Moq;
 using Xunit;
 
-namespace DependencyGraph.Tests.Testing
+namespace LanceC.DependencyGraph.Tests.Testing
 {
     public class SequenceVerifier
     {

@@ -5,9 +5,9 @@
 // -------------------------------------------------------------------------------------------------
 
 using System;
-using DependencyGraph.Internal.Abstractions;
+using LanceC.DependencyGraph.Internal.Abstractions;
 
-namespace DependencyGraph.Internal
+namespace LanceC.DependencyGraph.Internal
 {
     internal class GraphFactory<T> : IGraphFactory<T>
         where T : IEquatable<T>
