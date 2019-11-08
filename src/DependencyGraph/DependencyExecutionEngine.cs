@@ -1,4 +1,4 @@
-﻿// -------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // <copyright file="DependencyExecutionEngine.cs" company="LanceC">
 // Copyright (c) LanceC. All rights reserved.
 // </copyright>
@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using LanceC.DependencyGraph.Internal.Abstractions;
 
@@ -22,7 +23,7 @@ namespace LanceC.DependencyGraph
             _graphFactory = graphFactory;
         }
 
-        public async Task ExecuteAll(IEnumerable<IDependencyExecution<T>> executions)
+        public async Task ExecuteAll(IEnumerable<IDependencyExecution<T>> executions, CancellationToken cancellationToken = default)
         {
             var graph = _graphFactory.Create();
             foreach (var execution in executions)
@@ -39,7 +40,9 @@ namespace LanceC.DependencyGraph
             foreach (var executionKey in sortedExecutionKeys)
             {
                 var execution = executions.Single(exec => exec.Key.Equals(executionKey));
-                await execution.Execute();
+                await execution
+                    .Execute(cancellationToken)
+                    .ConfigureAwait(false);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿// -------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // <copyright file="GraphTests.cs" company="LanceC">
 // Copyright (c) LanceC. All rights reserved.
 // </copyright>
@@ -21,7 +21,7 @@ namespace LanceC.DependencyGraph.Tests.Internal
         public static TheoryData<IReadOnlyCollection<string>> GetAdjacentNodes_SourceNodeInGraph_Data
             => new TheoryData<IReadOnlyCollection<string>>
             {
-                { new string[0] },
+                { Array.Empty<string>() },
                 {
                     new[]
                     {

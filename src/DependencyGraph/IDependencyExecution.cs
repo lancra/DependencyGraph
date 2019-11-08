@@ -1,4 +1,4 @@
-﻿// -------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // <copyright file="IDependencyExecution.cs" company="LanceC">
 // Copyright (c) LanceC. All rights reserved.
 // </copyright>
@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LanceC.DependencyGraph
@@ -30,7 +31,10 @@ namespace LanceC.DependencyGraph
         /// <summary>
         /// Executes the dependent action.
         /// </summary>
+        /// <param name="cancellationToken">
+        /// A <see cref="CancellationToken"/> to observe while waiting for the task to complete.
+        /// </param>
         /// <returns>The <see cref="Task"/> that represents the asynchronous operation.</returns>
-        Task Execute();
+        Task Execute(CancellationToken cancellationToken = default);
     }
 }
