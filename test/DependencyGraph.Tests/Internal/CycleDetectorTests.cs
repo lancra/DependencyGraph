@@ -1,4 +1,4 @@
-﻿// -------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // <copyright file="CycleDetectorTests.cs" company="LanceC">
 // Copyright (c) LanceC. All rights reserved.
 // </copyright>
@@ -42,7 +42,7 @@ namespace LanceC.DependencyGraph.Tests.Internal
             var sut = mocker.CreateInstance<CycleDetector<string>>();
 
             // Act
-            var cycles = sut.DetectCycles(new DummyNode<string>[0]);
+            var cycles = sut.DetectCycles(Array.Empty<DummyNode<string>>());
 
             // Assert
             Assert.Empty(cycles);
@@ -203,7 +203,7 @@ namespace LanceC.DependencyGraph.Tests.Internal
             node1.AdjacentNodes = new[] { node2, };
             node2.AdjacentNodes = new[] { node3, };
             node3.AdjacentNodes = new[] { node4, };
-            node4.AdjacentNodes = new INode<string>[0];
+            node4.AdjacentNodes = Array.Empty<INode<string>>();
 
             var nodes = new[]
             {

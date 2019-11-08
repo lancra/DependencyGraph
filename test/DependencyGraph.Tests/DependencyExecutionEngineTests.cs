@@ -1,4 +1,4 @@
-﻿// -------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // <copyright file="DependencyExecutionEngineTests.cs" company="LanceC">
 // Copyright (c) LanceC. All rights reserved.
 // </copyright>
@@ -56,7 +56,7 @@ namespace LanceC.DependencyGraph.Tests
             var sut = mocker.CreateInstance<DependencyExecutionEngine<string>>();
 
             // Act
-            await sut.ExecuteAll(executions);
+            await sut.ExecuteAll(executions, default);
 
             // Assert
             graphMock.Verify(graph => graph.AddEdge(executionMock1.Object.Key, executionMock2.Object.Key));
@@ -98,17 +98,17 @@ namespace LanceC.DependencyGraph.Tests
             var sequenceVerifier = new SequenceVerifier();
             executionMock3
                 .InSequence(sequenceVerifier.Sequence)
-                .Setup(execution => execution.Execute())
+                .Setup(execution => execution.Execute(default))
                 .Returns(Task.CompletedTask)
                 .Callback(sequenceVerifier.NextCallback());
             executionMock2
                 .InSequence(sequenceVerifier.Sequence)
-                .Setup(execution => execution.Execute())
+                .Setup(execution => execution.Execute(default))
                 .Returns(Task.CompletedTask)
                 .Callback(sequenceVerifier.NextCallback());
             executionMock1
                 .InSequence(sequenceVerifier.Sequence)
-                .Setup(execution => execution.Execute())
+                .Setup(execution => execution.Execute(default))
                 .Returns(Task.CompletedTask)
                 .Callback(sequenceVerifier.NextCallback());
 
@@ -121,12 +121,12 @@ namespace LanceC.DependencyGraph.Tests
             var sut = mocker.CreateInstance<DependencyExecutionEngine<string>>();
 
             // Act
-            await sut.ExecuteAll(executions);
+            await sut.ExecuteAll(executions, default);
 
             // Assert
-            executionMock1.Verify(execution => execution.Execute());
-            executionMock2.Verify(execution => execution.Execute());
-            executionMock3.Verify(execution => execution.Execute());
+            executionMock1.Verify(execution => execution.Execute(default));
+            executionMock2.Verify(execution => execution.Execute(default));
+            executionMock3.Verify(execution => execution.Execute(default));
             sequenceVerifier.VerifyAll();
         }
 
@@ -157,17 +157,17 @@ namespace LanceC.DependencyGraph.Tests
             var sequenceVerifier = new SequenceVerifier();
             executionMock3
                 .InSequence(sequenceVerifier.Sequence)
-                .Setup(execution => execution.Execute())
+                .Setup(execution => execution.Execute(default))
                 .Returns(Task.CompletedTask)
                 .Callback(sequenceVerifier.NextCallback());
             executionMock2
                 .InSequence(sequenceVerifier.Sequence)
-                .Setup(execution => execution.Execute())
+                .Setup(execution => execution.Execute(default))
                 .Returns(Task.CompletedTask)
                 .Callback(sequenceVerifier.NextCallback());
             executionMock1
                 .InSequence(sequenceVerifier.Sequence)
-                .Setup(execution => execution.Execute())
+                .Setup(execution => execution.Execute(default))
                 .Returns(Task.CompletedTask)
                 .Callback(sequenceVerifier.NextCallback());
 
@@ -180,12 +180,12 @@ namespace LanceC.DependencyGraph.Tests
             var sut = mocker.CreateInstance<DependencyExecutionEngine<string>>();
 
             // Act
-            await sut.ExecuteAll(executions);
+            await sut.ExecuteAll(executions, default);
 
             // Assert
-            executionMock1.Verify(execution => execution.Execute());
-            executionMock2.Verify(execution => execution.Execute());
-            executionMock3.Verify(execution => execution.Execute());
+            executionMock1.Verify(execution => execution.Execute(default));
+            executionMock2.Verify(execution => execution.Execute(default));
+            executionMock3.Verify(execution => execution.Execute(default));
             sequenceVerifier.VerifyAll();
         }
 
