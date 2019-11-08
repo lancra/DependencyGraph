@@ -28,10 +28,10 @@ namespace LanceC.DependencyGraph
             foreach (var execution in executions)
             {
                 graph.GetOrAddNode(execution.Key);
-                foreach (var dependency in execution.Dependencies)
+                foreach (var dependentKey in execution.DependentKeys)
                 {
-                    graph.GetOrAddNode(dependency.Key);
-                    graph.AddEdge(execution.Key, dependency.Key);
+                    graph.GetOrAddNode(dependentKey);
+                    graph.AddEdge(execution.Key, dependentKey);
                 }
             }
 

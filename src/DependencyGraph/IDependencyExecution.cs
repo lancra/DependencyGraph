@@ -23,9 +23,9 @@ namespace LanceC.DependencyGraph
         T Key { get; }
 
         /// <summary>
-        /// Gets the executions that the <see cref="IDependencyExecution{T}"/> requires to be executed.
+        /// Gets the keys for the executions that the <see cref="IDependencyExecution{T}"/> requires to be executed.
         /// </summary>
-        IReadOnlyCollection<IDependencyExecution<T>> Dependencies { get; }
+        IReadOnlyCollection<T> DependentKeys { get; }
 
         /// <summary>
         /// Executes the dependent action.

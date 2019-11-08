@@ -27,11 +27,11 @@ namespace LanceC.DependencyGraph.Tests
             var executionMock3 = MockDependencyExecution("3");
 
             executionMock1
-                .SetupGet(execution => execution.Dependencies)
-                .Returns(new[] { executionMock2.Object, executionMock3.Object, });
+                .SetupGet(execution => execution.DependentKeys)
+                .Returns(new[] { executionMock2.Object.Key, executionMock3.Object.Key, });
             executionMock2
-                .SetupGet(execution => execution.Dependencies)
-                .Returns(new[] { executionMock3.Object, });
+                .SetupGet(execution => execution.DependentKeys)
+                .Returns(new[] { executionMock3.Object.Key, });
 
             var graphMock = mocker.GetMock<IGraph<string>>();
             graphMock
@@ -75,11 +75,11 @@ namespace LanceC.DependencyGraph.Tests
             var executionMock3 = MockDependencyExecution("3");
 
             executionMock1
-                .SetupGet(execution => execution.Dependencies)
-                .Returns(new[] { executionMock2.Object, executionMock3.Object, });
+                .SetupGet(execution => execution.DependentKeys)
+                .Returns(new[] { executionMock2.Object.Key, executionMock3.Object.Key, });
             executionMock2
-                .SetupGet(execution => execution.Dependencies)
-                .Returns(new[] { executionMock3.Object, });
+                .SetupGet(execution => execution.DependentKeys)
+                .Returns(new[] { executionMock3.Object.Key, });
 
             var graphMock = mocker.GetMock<IGraph<string>>();
             graphMock
@@ -197,8 +197,8 @@ namespace LanceC.DependencyGraph.Tests
                 .SetupGet(dependencyExecution => dependencyExecution.Key)
                 .Returns(key);
             dependencyExecutionMock
-                .SetupGet(dependencyExecution => dependencyExecution.Dependencies)
-                .Returns(new IDependencyExecution<T>[0]);
+                .SetupGet(dependencyExecution => dependencyExecution.DependentKeys)
+                .Returns(Array.Empty<T>());
 
             return dependencyExecutionMock;
         }
