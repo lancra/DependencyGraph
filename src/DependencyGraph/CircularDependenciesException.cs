@@ -32,20 +32,6 @@ namespace LanceC.DependencyGraph
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CircularDependenciesException"/> class.
-        /// </summary>
-        /// <param name="message">The error message that explains the reason for the exception.</param>
-        /// <param name="innerException">
-        /// The exception that is the cause of the current exception, or a null reference if no inner exception is specified.
-        /// </param>
-        /// <param name="dependencyChains">The text representations of the circular dependency chains.</param>
-        internal CircularDependenciesException(Exception innerException, IReadOnlyCollection<string> dependencyChains)
-            : base(DefaultMessage)
-        {
-            DependencyChains = dependencyChains;
-        }
-
-        /// <summary>
         /// Gets the text representations of the circular dependency chains.
         /// </summary>
         public IReadOnlyCollection<string> DependencyChains { get; } = Array.Empty<string>();
