@@ -247,7 +247,7 @@ namespace LanceC.DependencyGraph.Tests.Internal
         }
 
         [Fact]
-        public void TopologicalSort_GraphHasCycle_ThrowsInvalidOperationException()
+        public void TopologicalSort_GraphHasCycle_ThrowsCircularDependenciesException()
         {
             // Arrange
             var mocker = new AutoMocker(MockBehavior.Loose);
@@ -255,6 +255,17 @@ namespace LanceC.DependencyGraph.Tests.Internal
             var node1 = "foo";
             var node2 = "bar";
             var node3 = "baz";
+
+            var cycle = new Cycle<string>(
+                new[]
+                {
+                    new DummyNode<string>("baz"),
+                    new DummyNode<string>("bar"),
+                    new DummyNode<string>("foo"),
+                });
+            mocker.GetMock<ICycleDetector<string>>()
+                .Setup(cycleDetector => cycleDetector.DetectCycles(It.IsAny<IEnumerable<INode<string>>>()))
+                .Returns(new[] { cycle, });
 
             var sut = mocker.CreateInstance<Graph<string>>();
             sut.GetOrAddNode(node1);
@@ -269,7 +280,9 @@ namespace LanceC.DependencyGraph.Tests.Internal
 
             // Assert
             Assert.NotNull(exception);
-            Assert.IsType<InvalidOperationException>(exception);
+            var circularDependenciesException = Assert.IsType<CircularDependenciesException>(exception);
+            var dependencyChain = Assert.Single(circularDependenciesException.DependencyChains);
+            Assert.Equal("'baz' -> 'bar' -> 'foo'", dependencyChain);
         }
 
         [Fact]

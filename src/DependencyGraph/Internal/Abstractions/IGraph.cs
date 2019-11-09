@@ -1,4 +1,4 @@
-﻿// -------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // <copyright file="IGraph.cs" company="LanceC">
 // Copyright (c) LanceC. All rights reserved.
 // </copyright>
@@ -64,6 +64,7 @@ namespace LanceC.DependencyGraph.Internal.Abstractions
         /// Performs a topological sort on the nodes in the <see cref="IGraph{T}"/>.
         /// </summary>
         /// <returns>The sorted nodes.</returns>
+        /// <exception cref="CircularDependenciesException">Thrown when the graph contains one or more cycles.</exception>
         IReadOnlyCollection<T> TopologicalSort();
     }
 }

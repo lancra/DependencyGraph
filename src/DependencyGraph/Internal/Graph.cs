@@ -1,4 +1,4 @@
-﻿// -------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 // <copyright file="Graph.cs" company="LanceC">
 // Copyright (c) LanceC. All rights reserved.
 // </copyright>
@@ -60,7 +60,10 @@ namespace LanceC.DependencyGraph.Internal
         {
             if (HasCycle())
             {
-                throw new InvalidOperationException($"Cannot perform a topological sort on a graph with cycles.");
+                var cycleTexts = GetCycles()
+                    .Select(cycle => cycle.ToString())
+                    .ToArray();
+                throw new CircularDependenciesException(cycleTexts);
             }
 
             var sortQueue = new Queue<INode<T>>();
