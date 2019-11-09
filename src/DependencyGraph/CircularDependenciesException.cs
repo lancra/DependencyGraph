@@ -19,23 +19,14 @@ namespace LanceC.DependencyGraph
         Justification = "This exception will only be instantiated from within this assembly.")]
     public class CircularDependenciesException : Exception
     {
+        private const string DefaultMessage = "One or more circular dependencies were found.";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CircularDependenciesException"/> class.
         /// </summary>
         /// <param name="dependencyChains">The text representations of the circular dependency chains.</param>
         internal CircularDependenciesException(IReadOnlyCollection<string> dependencyChains)
-            : base()
-        {
-            DependencyChains = dependencyChains;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CircularDependenciesException"/> class.
-        /// </summary>
-        /// <param name="message">The message that describes the error.</param>
-        /// <param name="dependencyChains">The text representations of the circular dependency chains.</param>
-        internal CircularDependenciesException(string message, IReadOnlyCollection<string> dependencyChains)
-            : base(message)
+            : base(DefaultMessage)
         {
             DependencyChains = dependencyChains;
         }
@@ -48,8 +39,8 @@ namespace LanceC.DependencyGraph
         /// The exception that is the cause of the current exception, or a null reference if no inner exception is specified.
         /// </param>
         /// <param name="dependencyChains">The text representations of the circular dependency chains.</param>
-        internal CircularDependenciesException(string message, Exception innerException, IReadOnlyCollection<string> dependencyChains)
-            : base(message)
+        internal CircularDependenciesException(Exception innerException, IReadOnlyCollection<string> dependencyChains)
+            : base(DefaultMessage)
         {
             DependencyChains = dependencyChains;
         }
