@@ -8,19 +8,21 @@
   <PropertyGroup>
     <PackageVersion>1.0.0</PackageVersion>
     <Authors>Lance Craig</Authors>
-    <Product>DependencyGraph</Product>
-    <Description>Builds a graph of dependencies and executes their defined processes in a valid order.</Description>
-    <Copyright>Copyright @ Lance Craig</Copyright>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <Title>Dependency Graph</Title>
+    <Description>Builds a graph of processes and their dependencies and executes them in a valid order.</Description>
+    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/lanceccraig/DependencyGraph</PackageProjectUrl>
     <RepositoryUrl>https://github.com/lanceccraig/DependencyGraph.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Copyright>Copyright @ Lance Craig</Copyright>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageIcon>icon.png</PackageIcon>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DebugType>portable</DebugType>
     <IncludeSymbols>true</IncludeSymbols>
-    <PackageIcon>icon.png</PackageIcon>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
