@@ -26,6 +26,13 @@ namespace LanceC.DependencyGraph
         /// A <see cref="CancellationToken"/> to observe while waiting for the task to complete.
         /// </param>
         /// <returns>The <see cref="Task"/> that represents the asynchronous operation.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="executions"/> is <c>null</c>.</exception>
+        /// <exception cref="CircularDependenciesException">
+        /// Thrown when the <paramref name="executions"/> contain one or more dependency chains.
+        /// </exception>
+        /// <exception cref="DuplicateKeyException{T}">
+        /// Thrown when the <paramref name="executions"/> contain one or more duplicate keys.
+        /// </exception>
         Task ExecuteAll(IEnumerable<IDependencyExecution<T>> executions, CancellationToken cancellationToken = default);
     }
 }
