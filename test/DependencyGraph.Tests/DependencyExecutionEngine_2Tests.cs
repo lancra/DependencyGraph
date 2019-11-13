@@ -32,17 +32,17 @@ namespace LanceC.DependencyGraph.Tests
             executionMock3
                 .InSequence(sequenceVerifier.Sequence)
                 .Setup(execution => execution.Execute(default))
-                .ReturnsAsync(CreateExecutionResult("3", "Three"))
+                .ReturnsAsync("Three")
                 .Callback(sequenceVerifier.NextCallback());
             executionMock2
                 .InSequence(sequenceVerifier.Sequence)
                 .Setup(execution => execution.Execute(default))
-                .ReturnsAsync(CreateExecutionResult("2", "Two"))
+                .ReturnsAsync("Two")
                 .Callback(sequenceVerifier.NextCallback());
             executionMock1
                 .InSequence(sequenceVerifier.Sequence)
                 .Setup(execution => execution.Execute(default))
-                .ReturnsAsync(CreateExecutionResult("1", "One"))
+                .ReturnsAsync("One")
                 .Callback(sequenceVerifier.NextCallback());
 
             var executions = new[]
@@ -193,12 +193,9 @@ namespace LanceC.DependencyGraph.Tests
                 .Returns(Array.Empty<TKey>());
             dependencyExecutionMock
                 .Setup(dependencyExecution => dependencyExecution.Execute(default))
-                .ReturnsAsync(new ExecutionResult<TKey, TResult>(key, result));
+                .ReturnsAsync(result);
 
             return dependencyExecutionMock;
         }
-
-        private ExecutionResult<TKey, TResult> CreateExecutionResult<TKey, TResult>(TKey key, TResult result)
-            => new ExecutionResult<TKey, TResult>(key, result);
     }
 }

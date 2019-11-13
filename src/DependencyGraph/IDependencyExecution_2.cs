@@ -5,7 +5,6 @@
 // -------------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,6 @@ namespace LanceC.DependencyGraph
         /// The <see cref="Task"/> that represents the asynchronous operation,
         /// containing the execution result.
         /// </returns>
-        Task<ExecutionResult<TKey, TResult>> Execute(CancellationToken cancellationToken = default);
+        Task<TResult> Execute(CancellationToken cancellationToken = default);
     }
 }

@@ -45,7 +45,8 @@ namespace LanceC.DependencyGraph
                     .Execute(cancellationToken)
                     .ConfigureAwait(false);
 
-                results.Add(result);
+                var executionResult = new ExecutionResult<TKey, TResult>(executionKey, result);
+                results.Add(executionResult);
             }
 
             return results;
