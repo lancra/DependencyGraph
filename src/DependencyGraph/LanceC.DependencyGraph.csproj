@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -6,11 +6,17 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Authors>Lance Craig</Authors>
     <Title>Dependency Graph</Title>
     <Description>Builds a graph of processes and their dependencies and executes them in a valid order.</Description>
-    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+Initial release.
+
+1.0.1 patch:
+- Throw exception when execution collection contains duplicate keys.
+- Support executions with return results.
+    </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/lanceccraig/DependencyGraph</PackageProjectUrl>
     <RepositoryUrl>https://github.com/lanceccraig/DependencyGraph.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
