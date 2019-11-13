@@ -1,23 +1,24 @@
 // -------------------------------------------------------------------------------------------------
-// <copyright file="DependencyExecutionEngineTests.cs" company="LanceC">
+// <copyright file="DependencyExecutionSorterTests.cs" company="LanceC">
 // Copyright (c) LanceC. All rights reserved.
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
 using System;
-using System.Threading.Tasks;
+using System.Linq;
+using LanceC.DependencyGraph.Exceptions;
+using LanceC.DependencyGraph.Internal;
 using LanceC.DependencyGraph.Internal.Abstractions;
-using LanceC.DependencyGraph.Tests.Testing;
 using Moq;
 using Moq.AutoMock;
 using Xunit;
 
-namespace LanceC.DependencyGraph.Tests
+namespace LanceC.DependencyGraph.Tests.Internal
 {
-    public class DependencyExecutionEngineTests
+    public class DependencyExecutionSorterTests
     {
         [Fact]
-        public async Task ExecuteAll_ExecutionsWithDependencies_AddsEdgesToGraph()
+        public void Sort_ExecutionsWithDependencies_AddsEdgesToGraph()
         {
             // Arrange
             var mocker = new AutoMocker(MockBehavior.Loose);
@@ -53,10 +54,10 @@ namespace LanceC.DependencyGraph.Tests
                 executionMock2.Object,
                 executionMock3.Object,
             };
-            var sut = mocker.CreateInstance<DependencyExecutionEngine<string>>();
+            var sut = mocker.CreateInstance<DependencyExecutionSorter<string>>();
 
             // Act
-            await sut.ExecuteAll(executions, default);
+            sut.Sort(executions);
 
             // Assert
             graphMock.Verify(graph => graph.AddEdge(executionMock1.Object.Key, executionMock2.Object.Key));
@@ -65,7 +66,7 @@ namespace LanceC.DependencyGraph.Tests
         }
 
         [Fact]
-        public async Task ExecuteAll_ExecutionsWithDependencies_RunsExecutionsInOrder()
+        public void Sort_ExecutionsWithDependencies_ReturnsExecutionKeysInOrder()
         {
             // Arrange
             var mocker = new AutoMocker(MockBehavior.Loose);
@@ -95,43 +96,32 @@ namespace LanceC.DependencyGraph.Tests
                 .Setup(graphFactory => graphFactory.Create())
                 .Returns(graphMock.Object);
 
-            var sequenceVerifier = new SequenceVerifier();
-            executionMock3
-                .InSequence(sequenceVerifier.Sequence)
-                .Setup(execution => execution.Execute(default))
-                .Returns(Task.CompletedTask)
-                .Callback(sequenceVerifier.NextCallback());
-            executionMock2
-                .InSequence(sequenceVerifier.Sequence)
-                .Setup(execution => execution.Execute(default))
-                .Returns(Task.CompletedTask)
-                .Callback(sequenceVerifier.NextCallback());
-            executionMock1
-                .InSequence(sequenceVerifier.Sequence)
-                .Setup(execution => execution.Execute(default))
-                .Returns(Task.CompletedTask)
-                .Callback(sequenceVerifier.NextCallback());
-
             var executions = new[]
             {
                 executionMock1.Object,
                 executionMock2.Object,
                 executionMock3.Object,
             };
-            var sut = mocker.CreateInstance<DependencyExecutionEngine<string>>();
+            var sut = mocker.CreateInstance<DependencyExecutionSorter<string>>();
 
             // Act
-            await sut.ExecuteAll(executions, default);
+            var keys = sut.Sort(executions);
 
             // Assert
-            executionMock1.Verify(execution => execution.Execute(default));
-            executionMock2.Verify(execution => execution.Execute(default));
-            executionMock3.Verify(execution => execution.Execute(default));
-            sequenceVerifier.VerifyAll();
+            Assert.Equal(3, keys.Count);
+
+            var firstKey = keys.ElementAt(0);
+            Assert.Equal(executionMock3.Object.Key, firstKey);
+
+            var secondKey = keys.ElementAt(1);
+            Assert.Equal(executionMock2.Object.Key, secondKey);
+
+            var thirdKey = keys.ElementAt(2);
+            Assert.Equal(executionMock1.Object.Key, thirdKey);
         }
 
         [Fact]
-        public async Task ExecuteAll_ExecutionsWithoutDependencies_RunsExecutionsInOrder()
+        public void Sort_ExecutionsWithoutDependencies_RunsExecutionsInOrder()
         {
             // Arrange
             var mocker = new AutoMocker(MockBehavior.Loose);
@@ -154,50 +144,39 @@ namespace LanceC.DependencyGraph.Tests
                 .Setup(graphFactory => graphFactory.Create())
                 .Returns(graphMock.Object);
 
-            var sequenceVerifier = new SequenceVerifier();
-            executionMock3
-                .InSequence(sequenceVerifier.Sequence)
-                .Setup(execution => execution.Execute(default))
-                .Returns(Task.CompletedTask)
-                .Callback(sequenceVerifier.NextCallback());
-            executionMock2
-                .InSequence(sequenceVerifier.Sequence)
-                .Setup(execution => execution.Execute(default))
-                .Returns(Task.CompletedTask)
-                .Callback(sequenceVerifier.NextCallback());
-            executionMock1
-                .InSequence(sequenceVerifier.Sequence)
-                .Setup(execution => execution.Execute(default))
-                .Returns(Task.CompletedTask)
-                .Callback(sequenceVerifier.NextCallback());
-
             var executions = new[]
             {
-                executionMock3.Object,
-                executionMock2.Object,
                 executionMock1.Object,
+                executionMock2.Object,
+                executionMock3.Object,
             };
-            var sut = mocker.CreateInstance<DependencyExecutionEngine<string>>();
+            var sut = mocker.CreateInstance<DependencyExecutionSorter<string>>();
 
             // Act
-            await sut.ExecuteAll(executions, default);
+            var keys = sut.Sort(executions);
 
             // Assert
-            executionMock1.Verify(execution => execution.Execute(default));
-            executionMock2.Verify(execution => execution.Execute(default));
-            executionMock3.Verify(execution => execution.Execute(default));
-            sequenceVerifier.VerifyAll();
+            Assert.Equal(3, keys.Count);
+
+            var firstKey = keys.ElementAt(0);
+            Assert.Equal(executionMock3.Object.Key, firstKey);
+
+            var secondKey = keys.ElementAt(1);
+            Assert.Equal(executionMock2.Object.Key, secondKey);
+
+            var thirdKey = keys.ElementAt(2);
+            Assert.Equal(executionMock1.Object.Key, thirdKey);
         }
 
         [Fact]
-        public async Task ExecuteAll_ExecutionCollectionIsNull_ThrowsArgumentNullException()
+        public void Sort_ExecutionCollectionIsNull_ThrowsArgumentNullException()
         {
             // Arrange
             var mocker = new AutoMocker(MockBehavior.Loose);
-            var sut = mocker.CreateInstance<DependencyExecutionEngine<string>>();
+            var sut = mocker.CreateInstance<DependencyExecutionSorter<string>>();
 
             // Act
-            var exception = await Record.ExceptionAsync(async () => await sut.ExecuteAll(default, default));
+            var exception = Record.Exception(() => sut.Sort(default));
 
             // Assert
             Assert.NotNull(exception);
@@ -205,7 +184,7 @@ namespace LanceC.DependencyGraph.Tests
         }
 
         [Fact]
-        public async Task ExecuteAll_ExecutionsHasDuplicateKeys_ThrowsDuplicateKeyException()
+        public void Sort_ExecutionsHasDuplicateKeys_ThrowsDuplicateKeyException()
         {
             // Arrange
             var mocker = new AutoMocker(MockBehavior.Loose);
@@ -217,10 +196,10 @@ namespace LanceC.DependencyGraph.Tests
                 MockDependencyExecution(key).Object,
             };
 
-            var sut = mocker.CreateInstance<DependencyExecutionEngine<string>>();
+            var sut = mocker.CreateInstance<DependencyExecutionSorter<string>>();
 
             // Act
-            var exception = await Record.ExceptionAsync(async () => await sut.ExecuteAll(executions, default));
+            var exception = Record.Exception(() => sut.Sort(executions));
 
             // Assert
             Assert.NotNull(exception);
@@ -230,7 +209,7 @@ namespace LanceC.DependencyGraph.Tests
         }
 
         [Fact]
-        public async Task ExecuteAll_TopologicalSortThrowsCircularDependenciesException_ThrowsCircularDependenciesException()
+        public void Sort_TopologicalSortThrowsCircularDependenciesException_ThrowsCircularDependenciesException()
         {
             // Arrange
             var mocker = new AutoMocker(MockBehavior.Loose);
@@ -246,26 +225,26 @@ namespace LanceC.DependencyGraph.Tests
                 .Setup(graphFactory => graphFactory.Create())
                 .Returns(graphMock.Object);
 
-            var sut = mocker.CreateInstance<DependencyExecutionEngine<string>>();
+            var sut = mocker.CreateInstance<DependencyExecutionSorter<string>>();
 
             // Act
-            var exception = await Record.ExceptionAsync(async () => await sut.ExecuteAll(executions, default));
+            var exception = Record.Exception(() => sut.Sort(executions));
 
             // Assert
             Assert.NotNull(exception);
             Assert.IsType<CircularDependenciesException>(exception);
         }
 
-        private Mock<IDependencyExecution<T>> MockDependencyExecution<T>(T key)
-            where T : IEquatable<T>
+        private Mock<IDependencyExecution<TKey>> MockDependencyExecution<TKey>(TKey key)
+            where TKey : IEquatable<TKey>
         {
-            var dependencyExecutionMock = new Mock<IDependencyExecution<T>>();
+            var dependencyExecutionMock = new Mock<IDependencyExecution<TKey>>();
             dependencyExecutionMock
                 .SetupGet(dependencyExecution => dependencyExecution.Key)
                 .Returns(key);
             dependencyExecutionMock
                 .SetupGet(dependencyExecution => dependencyExecution.DependentKeys)
-                .Returns(Array.Empty<T>());
+                .Returns(Array.Empty<TKey>());
 
             return dependencyExecutionMock;
         }

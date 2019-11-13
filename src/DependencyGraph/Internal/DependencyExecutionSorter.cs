@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------------------------------
-// <copyright file="DependencyExecutionEngine.cs" company="LanceC">
+// <copyright file="DependencyExecutionSorter.cs" company="LanceC">
 // Copyright (c) LanceC. All rights reserved.
 // </copyright>
 // -------------------------------------------------------------------------------------------------
@@ -7,26 +7,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using LanceC.DependencyGraph.Internal;
+using LanceC.DependencyGraph.Exceptions;
 using LanceC.DependencyGraph.Internal.Abstractions;
 
-namespace LanceC.DependencyGraph
+namespace LanceC.DependencyGraph.Internal
 {
-    internal class DependencyExecutionEngine<T> : IDependencyExecutionEngine<T>
-        where T : IEquatable<T>
+    internal class DependencyExecutionSorter<TKey> : IDependencyExecutionSorter<TKey>
+        where TKey : IEquatable<TKey>
     {
-        private readonly IGraphFactory<T> _graphFactory;
+        private readonly IGraphFactory<TKey> _graphFactory;
 
-        public DependencyExecutionEngine(IGraphFactory<T> graphFactory)
+        public DependencyExecutionSorter(IGraphFactory<TKey> graphFactory)
         {
             _graphFactory = graphFactory;
         }
 
-        public async Task ExecuteAll(IEnumerable<IDependencyExecution<T>> executions, CancellationToken cancellationToken = default)
+        public IReadOnlyCollection<TKey> Sort(IEnumerable<IDependencyExecutionIdentifier<TKey>> executions)
         {
-            Guard.NotNull(executions, nameof(executions));
             VerifyUniqueKeys(executions);
 
             var graph = _graphFactory.Create();
@@ -40,17 +37,13 @@ namespace LanceC.DependencyGraph
                 }
             }
 
-            var sortedExecutionKeys = graph.TopologicalSort();
-            foreach (var executionKey in sortedExecutionKeys)
-            {
-                var execution = executions.Single(exec => exec.Key.Equals(executionKey));
-                await execution
-                    .Execute(cancellationToken)
-                    .ConfigureAwait(false);
-            }
+            var sortedExecutionKeys = graph
+                .TopologicalSort()
+                .ToArray();
+            return sortedExecutionKeys;
         }
 
-        private void VerifyUniqueKeys(IEnumerable<IDependencyExecution<T>> executions)
+        private void VerifyUniqueKeys(IEnumerable<IDependencyExecutionIdentifier<TKey>> executions)
         {
             var duplicateKeys = executions
                 .GroupBy(execution => execution.Key)
@@ -59,7 +52,7 @@ namespace LanceC.DependencyGraph
                 .ToArray();
             if (duplicateKeys.Any())
             {
-                throw new DuplicateKeyException<T>(duplicateKeys);
+                throw new DuplicateKeyException<TKey>(duplicateKeys);
             }
         }
     }

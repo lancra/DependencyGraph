@@ -30,6 +30,21 @@ namespace LanceC.DependencyGraph.Tests
         }
 
         [Fact]
+        public void AddDependencyGraph_ForProvidedServiceCollection_RegistersDependencyExecutionSorter()
+        {
+            // Arrange
+            var services = new ServiceCollection();
+
+            // Act
+            services.AddDependencyGraph();
+
+            // Assert
+            var serviceProvider = services.BuildServiceProvider();
+            var dependencyExecutionSorter = serviceProvider.GetService<IDependencyExecutionSorter<string>>();
+            Assert.NotNull(dependencyExecutionSorter);
+        }
+
+        [Fact]
         public void AddDependencyGraph_ForProvidedServiceCollection_RegistersGraphFactory()
         {
             // Arrange
@@ -45,7 +60,7 @@ namespace LanceC.DependencyGraph.Tests
         }
 
         [Fact]
-        public void AddDependencyGraph_ForProvidedServiceCollection_RegistersDependencyExecutionEngine()
+        public void AddDependencyGraph_ForProvidedServiceCollection_RegistersDependencyExecutionEngineOfSingleType()
         {
             // Arrange
             var services = new ServiceCollection();
@@ -56,6 +71,21 @@ namespace LanceC.DependencyGraph.Tests
             // Assert
             var serviceProvider = services.BuildServiceProvider();
             var dependencyExecutionEngine = serviceProvider.GetService<IDependencyExecutionEngine<string>>();
+            Assert.NotNull(dependencyExecutionEngine);
+        }
+
+        [Fact]
+        public void AddDependencyGraph_ForProvidedServiceCollection_RegistersDependencyExecutionEngineOfTwoTypes()
+        {
+            // Arrange
+            var services = new ServiceCollection();
+
+            // Act
+            services.AddDependencyGraph();
+
+            // Assert
+            var serviceProvider = services.BuildServiceProvider();
+            var dependencyExecutionEngine = serviceProvider.GetService<IDependencyExecutionEngine<string, string>>();
             Assert.NotNull(dependencyExecutionEngine);
         }
     }

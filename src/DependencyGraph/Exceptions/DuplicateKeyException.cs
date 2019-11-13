@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace LanceC.DependencyGraph
+namespace LanceC.DependencyGraph.Exceptions
 {
     /// <summary>
     /// Represents that the provided executions contain multiple instances of the same key.
