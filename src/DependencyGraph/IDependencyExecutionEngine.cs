@@ -14,9 +14,9 @@ namespace LanceC.DependencyGraph
     /// <summary>
     /// Defines the interface for an engine used to run a series of executions with inter-dependencies.
     /// </summary>
-    /// <typeparam name="T">The unique key type for the executions.</typeparam>
-    public interface IDependencyExecutionEngine<T>
-        where T : IEquatable<T>
+    /// <typeparam name="TKey">The unique key type for the executions.</typeparam>
+    public interface IDependencyExecutionEngine<TKey>
+        where TKey : IEquatable<TKey>
     {
         /// <summary>
         /// Executes all provided <paramref name="executions"/> in a valid order.
@@ -30,9 +30,9 @@ namespace LanceC.DependencyGraph
         /// <exception cref="CircularDependenciesException">
         /// Thrown when the <paramref name="executions"/> contain one or more dependency chains.
         /// </exception>
-        /// <exception cref="DuplicateKeyException{T}">
+        /// <exception cref="DuplicateKeyException{TKey}">
         /// Thrown when the <paramref name="executions"/> contain one or more duplicate keys.
         /// </exception>
-        Task ExecuteAll(IEnumerable<IDependencyExecution<T>> executions, CancellationToken cancellationToken = default);
+        Task ExecuteAll(IEnumerable<IDependencyExecution<TKey>> executions, CancellationToken cancellationToken = default);
     }
 }

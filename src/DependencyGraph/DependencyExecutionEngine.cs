@@ -14,17 +14,17 @@ using LanceC.DependencyGraph.Internal.Abstractions;
 
 namespace LanceC.DependencyGraph
 {
-    internal class DependencyExecutionEngine<T> : IDependencyExecutionEngine<T>
-        where T : IEquatable<T>
+    internal class DependencyExecutionEngine<TKey> : IDependencyExecutionEngine<TKey>
+        where TKey : IEquatable<TKey>
     {
-        private readonly IGraphFactory<T> _graphFactory;
+        private readonly IGraphFactory<TKey> _graphFactory;
 
-        public DependencyExecutionEngine(IGraphFactory<T> graphFactory)
+        public DependencyExecutionEngine(IGraphFactory<TKey> graphFactory)
         {
             _graphFactory = graphFactory;
         }
 
-        public async Task ExecuteAll(IEnumerable<IDependencyExecution<T>> executions, CancellationToken cancellationToken = default)
+        public async Task ExecuteAll(IEnumerable<IDependencyExecution<TKey>> executions, CancellationToken cancellationToken = default)
         {
             Guard.NotNull(executions, nameof(executions));
             VerifyUniqueKeys(executions);
@@ -50,7 +50,7 @@ namespace LanceC.DependencyGraph
             }
         }
 
-        private void VerifyUniqueKeys(IEnumerable<IDependencyExecution<T>> executions)
+        private void VerifyUniqueKeys(IEnumerable<IDependencyExecution<TKey>> executions)
         {
             var duplicateKeys = executions
                 .GroupBy(execution => execution.Key)
@@ -59,7 +59,7 @@ namespace LanceC.DependencyGraph
                 .ToArray();
             if (duplicateKeys.Any())
             {
-                throw new DuplicateKeyException<T>(duplicateKeys);
+                throw new DuplicateKeyException<TKey>(duplicateKeys);
             }
         }
     }
