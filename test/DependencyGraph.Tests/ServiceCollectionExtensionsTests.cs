@@ -30,6 +30,21 @@ namespace LanceC.DependencyGraph.Tests
         }
 
         [Fact]
+        public void AddDependencyGraph_ForProvidedServiceCollection_RegistersDependencyExecutionSorter()
+        {
+            // Arrange
+            var services = new ServiceCollection();
+
+            // Act
+            services.AddDependencyGraph();
+
+            // Assert
+            var serviceProvider = services.BuildServiceProvider();
+            var dependencyExecutionSorter = serviceProvider.GetService<IDependencyExecutionSorter<string>>();
+            Assert.NotNull(dependencyExecutionSorter);
+        }
+
+        [Fact]
         public void AddDependencyGraph_ForProvidedServiceCollection_RegistersGraphFactory()
         {
             // Arrange

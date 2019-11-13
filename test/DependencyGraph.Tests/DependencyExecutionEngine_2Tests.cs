@@ -1,10 +1,11 @@
 // -------------------------------------------------------------------------------------------------
-// <copyright file="DependencyExecutionEngine_1Tests.cs" company="LanceC">
+// <copyright file="DependencyExecutionEngine_2Tests.cs" company="LanceC">
 // Copyright (c) LanceC. All rights reserved.
 // </copyright>
 // -------------------------------------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using LanceC.DependencyGraph.Exceptions;
 using LanceC.DependencyGraph.Internal.Abstractions;
@@ -15,7 +16,7 @@ using Xunit;
 
 namespace LanceC.DependencyGraph.Tests
 {
-    public class DependencyExecutionEngine_1Tests
+    public class DependencyExecutionEngine_2Tests
     {
         [Fact]
         public async Task ExecuteAll_ForProvidedExecutions_RunsExecutionsInOrder()
@@ -23,25 +24,25 @@ namespace LanceC.DependencyGraph.Tests
             // Arrange
             var mocker = new AutoMocker(MockBehavior.Loose);
 
-            var executionMock1 = MockDependencyExecution("1");
-            var executionMock2 = MockDependencyExecution("2");
-            var executionMock3 = MockDependencyExecution("3");
+            var executionMock1 = MockDependencyExecution("1", "One");
+            var executionMock2 = MockDependencyExecution("2", "Two");
+            var executionMock3 = MockDependencyExecution("3", "Three");
 
             var sequenceVerifier = new SequenceVerifier();
             executionMock3
                 .InSequence(sequenceVerifier.Sequence)
                 .Setup(execution => execution.Execute(default))
-                .Returns(Task.CompletedTask)
+                .ReturnsAsync(CreateExecutionResult("3", "Three"))
                 .Callback(sequenceVerifier.NextCallback());
             executionMock2
                 .InSequence(sequenceVerifier.Sequence)
                 .Setup(execution => execution.Execute(default))
-                .Returns(Task.CompletedTask)
+                .ReturnsAsync(CreateExecutionResult("2", "Two"))
                 .Callback(sequenceVerifier.NextCallback());
             executionMock1
                 .InSequence(sequenceVerifier.Sequence)
                 .Setup(execution => execution.Execute(default))
-                .Returns(Task.CompletedTask)
+                .ReturnsAsync(CreateExecutionResult("1", "One"))
                 .Callback(sequenceVerifier.NextCallback());
 
             var executions = new[]
@@ -61,7 +62,7 @@ namespace LanceC.DependencyGraph.Tests
                 .Setup(dependencyExecutionSorter => dependencyExecutionSorter.Sort(executions))
                 .Returns(keys);
 
-            var sut = mocker.CreateInstance<DependencyExecutionEngine<string>>();
+            var sut = mocker.CreateInstance<DependencyExecutionEngine<string, string>>();
 
             // Act
             await sut.ExecuteAll(executions, default);
@@ -74,11 +75,59 @@ namespace LanceC.DependencyGraph.Tests
         }
 
         [Fact]
+        public async Task ExecuteAll_ForProvidedExecutions_ReturnsExpectedResults()
+        {
+            // Arrange
+            var mocker = new AutoMocker(MockBehavior.Loose);
+
+            var executionMock1 = MockDependencyExecution("1", "One");
+            var executionMock2 = MockDependencyExecution("2", "Two");
+            var executionMock3 = MockDependencyExecution("3", "Three");
+
+            var executions = new[]
+            {
+                executionMock3.Object,
+                executionMock2.Object,
+                executionMock1.Object,
+            };
+
+            var keys = new[]
+            {
+                executionMock3.Object.Key,
+                executionMock2.Object.Key,
+                executionMock1.Object.Key,
+            };
+            mocker.GetMock<IDependencyExecutionSorter<string>>()
+                .Setup(dependencyExecutionSorter => dependencyExecutionSorter.Sort(executions))
+                .Returns(keys);
+
+            var sut = mocker.CreateInstance<DependencyExecutionEngine<string, string>>();
+
+            // Act
+            var results = await sut.ExecuteAll(executions, default);
+
+            // Assert
+            Assert.Equal(3, results.Count);
+
+            var firstResult = results.ElementAt(0);
+            Assert.Equal(executionMock3.Object.Key, firstResult.Key);
+            Assert.Equal("Three", firstResult.Result);
+
+            var secondResult = results.ElementAt(1);
+            Assert.Equal(executionMock2.Object.Key, secondResult.Key);
+            Assert.Equal("Two", secondResult.Result);
+
+            var thirdResult = results.ElementAt(2);
+            Assert.Equal(executionMock1.Object.Key, thirdResult.Key);
+            Assert.Equal("One", thirdResult.Result);
+        }
+
+        [Fact]
         public async Task ExecuteAll_ExecutionCollectionIsNull_ThrowsArgumentNullException()
         {
             // Arrange
             var mocker = new AutoMocker(MockBehavior.Loose);
-            var sut = mocker.CreateInstance<DependencyExecutionEngine<string>>();
+            var sut = mocker.CreateInstance<DependencyExecutionEngine<string, string>>();
 
             // Act
             var exception = await Record.ExceptionAsync(async () => await sut.ExecuteAll(default, default));
@@ -94,13 +143,13 @@ namespace LanceC.DependencyGraph.Tests
             // Arrange
             var mocker = new AutoMocker(MockBehavior.Loose);
 
-            var executions = Array.Empty<IDependencyExecution<string>>();
+            var executions = Array.Empty<IDependencyExecution<string, string>>();
 
             mocker.GetMock<IDependencyExecutionSorter<string>>()
                 .Setup(dependencyExecutionSorter => dependencyExecutionSorter.Sort(executions))
                 .Throws(new DuplicateKeyException<string>(Array.Empty<string>()));
 
-            var sut = mocker.CreateInstance<DependencyExecutionEngine<string>>();
+            var sut = mocker.CreateInstance<DependencyExecutionEngine<string, string>>();
 
             // Act
             var exception = await Record.ExceptionAsync(async () => await sut.ExecuteAll(executions, default));
@@ -116,13 +165,13 @@ namespace LanceC.DependencyGraph.Tests
             // Arrange
             var mocker = new AutoMocker(MockBehavior.Loose);
 
-            var executions = Array.Empty<IDependencyExecution<string>>();
+            var executions = Array.Empty<IDependencyExecution<string, string>>();
 
             mocker.GetMock<IDependencyExecutionSorter<string>>()
                 .Setup(dependencyExecutionSorter => dependencyExecutionSorter.Sort(executions))
                 .Throws(new CircularDependenciesException(Array.Empty<string>()));
 
-            var sut = mocker.CreateInstance<DependencyExecutionEngine<string>>();
+            var sut = mocker.CreateInstance<DependencyExecutionEngine<string, string>>();
 
             // Act
             var exception = await Record.ExceptionAsync(async () => await sut.ExecuteAll(executions, default));
@@ -132,18 +181,24 @@ namespace LanceC.DependencyGraph.Tests
             Assert.IsType<CircularDependenciesException>(exception);
         }
 
-        private Mock<IDependencyExecution<TKey>> MockDependencyExecution<TKey>(TKey key)
+        private Mock<IDependencyExecution<TKey, TResult>> MockDependencyExecution<TKey, TResult>(TKey key, TResult result)
             where TKey : IEquatable<TKey>
         {
-            var dependencyExecutionMock = new Mock<IDependencyExecution<TKey>>();
+            var dependencyExecutionMock = new Mock<IDependencyExecution<TKey, TResult>>();
             dependencyExecutionMock
                 .SetupGet(dependencyExecution => dependencyExecution.Key)
                 .Returns(key);
             dependencyExecutionMock
                 .SetupGet(dependencyExecution => dependencyExecution.DependentKeys)
                 .Returns(Array.Empty<TKey>());
+            dependencyExecutionMock
+                .Setup(dependencyExecution => dependencyExecution.Execute(default))
+                .ReturnsAsync(new ExecutionResult<TKey, TResult>(key, result));
 
             return dependencyExecutionMock;
         }
+
+        private ExecutionResult<TKey, TResult> CreateExecutionResult<TKey, TResult>(TKey key, TResult result)
+            => new ExecutionResult<TKey, TResult>(key, result);
     }
 }

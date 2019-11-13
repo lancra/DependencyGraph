@@ -5,10 +5,10 @@
 // -------------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using LanceC.DependencyGraph.Internal;
 
 namespace LanceC.DependencyGraph
 {
@@ -20,19 +20,9 @@ namespace LanceC.DependencyGraph
         "StyleCop.CSharp.DocumentationRules",
         "SA1649:File name should match first type name",
         Justification = "Allow multiple instances of the same interface with different type parameters.")]
-    public interface IDependencyExecution<TKey>
+    public interface IDependencyExecution<TKey> : IDependencyExecutionIdentifier<TKey>
         where TKey : IEquatable<TKey>
     {
-        /// <summary>
-        /// Gets the key for the execution.
-        /// </summary>
-        TKey Key { get; }
-
-        /// <summary>
-        /// Gets the keys for the executions that the <see cref="IDependencyExecution{TKey}"/> requires to be executed.
-        /// </summary>
-        IReadOnlyCollection<TKey> DependentKeys { get; }
-
         /// <summary>
         /// Executes the dependent action.
         /// </summary>
