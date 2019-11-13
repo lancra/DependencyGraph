@@ -1,11 +1,12 @@
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// <copyright file="IDependencyExecutionEngine.cs" company="LanceC">
+// <copyright file="IDependencyExecutionEngine_1.cs" company="LanceC">
 // Copyright (c) LanceC. All rights reserved.
 // </copyright>
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,6 +16,10 @@ namespace LanceC.DependencyGraph
     /// Defines the interface for an engine used to run a series of executions with inter-dependencies.
     /// </summary>
     /// <typeparam name="TKey">The unique key type for the executions.</typeparam>
+    [SuppressMessage(
+        "StyleCop.CSharp.DocumentationRules",
+        "SA1649:File name should match first type name",
+        Justification = "Allow multiple instances of the same interface with different type parameters.")]
     public interface IDependencyExecutionEngine<TKey>
         where TKey : IEquatable<TKey>
     {
