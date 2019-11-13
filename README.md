@@ -9,9 +9,12 @@ This package is used to execute processes that are dependent on the execution of
 
 Install the [NuGet package][nuget] into your project.
 
-    PM> Install-Package LanceC.DependencyGraph
-
-    $ dotnet add package LanceC.DependencyGraph
+```
+PM> Install-Package LanceC.DependencyGraph
+```
+```
+$ dotnet add package LanceC.DependencyGraph
+```
 
 ## Usage
 
