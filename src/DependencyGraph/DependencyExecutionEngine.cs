@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using LanceC.DependencyGraph.Internal;
 using LanceC.DependencyGraph.Internal.Abstractions;
 
 namespace LanceC.DependencyGraph
@@ -25,6 +26,9 @@ namespace LanceC.DependencyGraph
 
         public async Task ExecuteAll(IEnumerable<IDependencyExecution<T>> executions, CancellationToken cancellationToken = default)
         {
+            Guard.NotNull(executions, nameof(executions));
+            VerifyUniqueKeys(executions);
+
             var graph = _graphFactory.Create();
             foreach (var execution in executions)
             {
@@ -43,6 +47,19 @@ namespace LanceC.DependencyGraph
                 await execution
                     .Execute(cancellationToken)
                     .ConfigureAwait(false);
+            }
+        }
+
+        private void VerifyUniqueKeys(IEnumerable<IDependencyExecution<T>> executions)
+        {
+            var duplicateKeys = executions
+                .GroupBy(execution => execution.Key)
+                .Where(executionGroup => executionGroup.Count() > 1)
+                .Select(executionGroup => executionGroup.Key)
+                .ToArray();
+            if (duplicateKeys.Any())
+            {
+                throw new DuplicateKeyException<T>(duplicateKeys);
             }
         }
     }
