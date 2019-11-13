@@ -37,11 +37,11 @@ The sample below uses `string` as the identifier type for the executions.
 public class Foo
 {
     private readonly IDependencyExecutionEngine<string> _dependencyExecutionEngine;
-    private readonly IEnumerable<IDependencyExecution<T>> _executions;
+    private readonly IEnumerable<IDependencyExecution<string>> _executions;
 
     public Foo(
         IDependencyExecutionEngine<string> dependencyExecutionEngine,
-        IEnumerable<IDependencyExecution<T>> executions)
+        IEnumerable<IDependencyExecution<string>> executions)
     {
         _dependencyExecutionEngine = dependencyExecutionEngine;
         _executions = executions;
@@ -56,6 +56,7 @@ public class Foo
 
 ### Errors
 
-In the case where a circular dependency chain is found (e.g. `A` has a dependency on `B` and `B` has a dependency on `A`), a `CircularDependenciesException` is thrown upon engine execution.
-
-The exception contains the text representations of the [strongly-connected cycles](https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm) (e.g. 'A' -> 'B').
+- In the case where a circular dependency chain is found (e.g. `A` has a dependency on `B` and `B` has a dependency on `A`), a `CircularDependenciesException` is thrown upon engine execution.
+    - The exception contains the text representations of the [strongly-connected cycles](https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm) (e.g. 'A' -> 'B').
+- In the case where multiple executions contain the same key, a `DuplicateKeyException` is thrown upon engine execution.
+- 
