@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using LanceC.DependencyGraph.Exceptions;
 
 namespace LanceC.DependencyGraph.Internal.Abstractions
 {

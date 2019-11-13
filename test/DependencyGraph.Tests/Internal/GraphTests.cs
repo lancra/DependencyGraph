@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LanceC.DependencyGraph.Exceptions;
 using LanceC.DependencyGraph.Internal;
 using LanceC.DependencyGraph.Internal.Abstractions;
 using LanceC.DependencyGraph.Tests.Testing;

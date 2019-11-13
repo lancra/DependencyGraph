@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace LanceC.DependencyGraph
+namespace LanceC.DependencyGraph.Exceptions
 {
     /// <summary>
     /// Represents that one or more executions cannot occur due to a circular reference in their defined depenencies.
