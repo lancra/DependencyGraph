@@ -59,4 +59,3 @@ public class Foo
 - In the case where a circular dependency chain is found (e.g. `A` has a dependency on `B` and `B` has a dependency on `A`), a `CircularDependenciesException` is thrown upon engine execution.
     - The exception contains the text representations of the [strongly-connected cycles](https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm) (e.g. 'A' -> 'B').
 - In the case where multiple executions contain the same key, a `DuplicateKeyException` is thrown upon engine execution.
-- 
