@@ -1,9 +1,3 @@
-﻿// -------------------------------------------------------------------------------------------------
-// <copyright file="DummyNode.cs" company="LanceC">
-// Copyright (c) LanceC. All rights reserved.
-// </copyright>
-// -------------------------------------------------------------------------------------------------
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

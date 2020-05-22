@@ -1,9 +1,3 @@
-// -------------------------------------------------------------------------------------------------
-// <copyright file="DependencyExecutionEngine_2Tests.cs" company="LanceC">
-// Copyright (c) LanceC. All rights reserved.
-// </copyright>
-// -------------------------------------------------------------------------------------------------
-
 using System;
 using System.Linq;
 using System.Threading.Tasks;
