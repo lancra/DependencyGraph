@@ -1,9 +1,3 @@
-﻿// -------------------------------------------------------------------------------------------------
-// <copyright file="NodeTests.cs" company="LanceC">
-// Copyright (c) LanceC. All rights reserved.
-// </copyright>
-// -------------------------------------------------------------------------------------------------
-
 using System;
 using LanceC.DependencyGraph.Internal;
 using Xunit;

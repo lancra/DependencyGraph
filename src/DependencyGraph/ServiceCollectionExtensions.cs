@@ -1,9 +1,3 @@
-// -------------------------------------------------------------------------------------------------
-// <copyright file="ServiceCollectionExtensions.cs" company="LanceC">
-// Copyright (c) LanceC. All rights reserved.
-// </copyright>
-// -------------------------------------------------------------------------------------------------
-
 using LanceC.DependencyGraph.Internal;
 using LanceC.DependencyGraph.Internal.Abstractions;
 using Microsoft.Extensions.DependencyInjection;

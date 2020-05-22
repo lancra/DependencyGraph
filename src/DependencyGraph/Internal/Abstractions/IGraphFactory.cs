@@ -1,9 +1,3 @@
-﻿// -------------------------------------------------------------------------------------------------
-// <copyright file="IGraphFactory.cs" company="LanceC">
-// Copyright (c) LanceC. All rights reserved.
-// </copyright>
-// -------------------------------------------------------------------------------------------------
-
 using System;
 
 namespace LanceC.DependencyGraph.Internal.Abstractions

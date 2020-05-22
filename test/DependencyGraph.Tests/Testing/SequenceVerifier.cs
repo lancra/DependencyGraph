@@ -1,9 +1,3 @@
-﻿// -------------------------------------------------------------------------------------------------
-// <copyright file="SequenceVerifier.cs" company="LanceC">
-// Copyright (c) LanceC. All rights reserved.
-// </copyright>
-// -------------------------------------------------------------------------------------------------
-
 using System;
 using Moq;
 using Xunit;

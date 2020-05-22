@@ -1,9 +1,3 @@
-// -------------------------------------------------------------------------------------------------
-// <copyright file="ExecutionResult.cs" company="LanceC">
-// Copyright (c) LanceC. All rights reserved.
-// </copyright>
-// -------------------------------------------------------------------------------------------------
-
 namespace LanceC.DependencyGraph
 {
     /// <summary>

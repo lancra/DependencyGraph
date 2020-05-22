@@ -1,9 +1,3 @@
-// -------------------------------------------------------------------------------------------------
-// <copyright file="DependencyExecutionEngine_1Tests.cs" company="LanceC">
-// Copyright (c) LanceC. All rights reserved.
-// </copyright>
-// -------------------------------------------------------------------------------------------------
-
 using System;
 using System.Threading.Tasks;
 using LanceC.DependencyGraph.Exceptions;
