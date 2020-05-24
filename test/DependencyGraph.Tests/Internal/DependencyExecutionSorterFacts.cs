@@ -7,7 +7,7 @@ using Moq;
 using Moq.AutoMock;
 using Xunit;
 
-namespace LanceC.DependencyGraph.Tests.Internal
+namespace LanceC.DependencyGraph.Facts.Internal
 {
     public class DependencyExecutionSorterFacts
     {

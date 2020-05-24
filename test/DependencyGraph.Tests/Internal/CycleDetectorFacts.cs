@@ -1,13 +1,12 @@
 using System;
 using System.Linq;
+using LanceC.DependencyGraph.Facts.Testing;
 using LanceC.DependencyGraph.Internal;
 using LanceC.DependencyGraph.Internal.Abstractions;
-using LanceC.DependencyGraph.Tests.Testing;
-using Moq;
 using Moq.AutoMock;
 using Xunit;
 
-namespace LanceC.DependencyGraph.Tests.Internal
+namespace LanceC.DependencyGraph.Facts.Internal
 {
     public class CycleDetectorFacts
     {

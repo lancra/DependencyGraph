@@ -2,7 +2,7 @@ using System;
 using LanceC.DependencyGraph.Internal;
 using Xunit;
 
-namespace LanceC.DependencyGraph.Tests.Internal
+namespace LanceC.DependencyGraph.Facts.Internal
 {
     public class NodeFacts
     {

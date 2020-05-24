@@ -1,13 +1,13 @@
 using System;
 using System.Threading.Tasks;
 using LanceC.DependencyGraph.Exceptions;
+using LanceC.DependencyGraph.Facts.Testing;
 using LanceC.DependencyGraph.Internal.Abstractions;
-using LanceC.DependencyGraph.Tests.Testing;
 using Moq;
 using Moq.AutoMock;
 using Xunit;
 
-namespace LanceC.DependencyGraph.Tests
+namespace LanceC.DependencyGraph.Facts
 {
     public class DependencyExecutionEngine_1Facts
     {

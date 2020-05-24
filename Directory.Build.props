@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)DependencyGraph.ruleset</CodeAnalysisRuleSet>
-    <IsTestProject Condition="$(MSBuildProjectName.EndsWith('Tests')) OR $(MSBuildProjectName.EndsWith('.Test'))">true</IsTestProject>
+    <IsTestProject Condition="$(MSBuildProjectName.EndsWith('Facts'))">true</IsTestProject>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 

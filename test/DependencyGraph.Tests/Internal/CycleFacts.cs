@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using LanceC.DependencyGraph.Facts.Testing;
 using LanceC.DependencyGraph.Internal;
 using LanceC.DependencyGraph.Internal.Abstractions;
-using LanceC.DependencyGraph.Tests.Testing;
 using Xunit;
 
-namespace LanceC.DependencyGraph.Tests.Internal
+namespace LanceC.DependencyGraph.Facts.Internal
 {
     public class CycleFacts
     {

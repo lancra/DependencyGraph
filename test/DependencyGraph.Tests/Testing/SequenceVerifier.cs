@@ -2,7 +2,7 @@ using System;
 using Moq;
 using Xunit;
 
-namespace LanceC.DependencyGraph.Tests.Testing
+namespace LanceC.DependencyGraph.Facts.Testing
 {
     public class SequenceVerifier
     {

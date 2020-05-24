@@ -2,7 +2,7 @@ using LanceC.DependencyGraph.Internal.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace LanceC.DependencyGraph.Tests
+namespace LanceC.DependencyGraph.Facts
 {
     public class ServiceCollectionExtensionsFacts
     {
