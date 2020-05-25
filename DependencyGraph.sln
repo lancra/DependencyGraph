@@ -3,21 +3,28 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanceC.DependencyGraph", "src\DependencyGraph\LanceC.DependencyGraph.csproj", "{53FF4BFD-694C-4278-8268-985737A2401C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanceC.DependencyGraph.Facts", "tests\DependencyGraph.Tests\LanceC.DependencyGraph.Facts.csproj", "{8AC2E926-B646-4AAC-941F-D94DB3E5A559}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{01A2D59F-E780-413A-BA7A-8F02423E3D0E}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		DependencyGraph.ruleset = DependencyGraph.ruleset
-		DependencyGraph.runsettings = DependencyGraph.runsettings
+		.ruleset = .ruleset
+		.runsettings = .runsettings
 		Directory.Build.props = Directory.Build.props
-		GlobalSuppressions.cs = GlobalSuppressions.cs
 		README.md = README.md
 		stylecop.json = stylecop.json
-		xunit.runner.json = xunit.runner.json
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C3E9CEC7-A133-439A-9F42-EDB563B6A7BD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanceC.DependencyGraph", "src\DependencyGraph\LanceC.DependencyGraph.csproj", "{53FF4BFD-694C-4278-8268-985737A2401C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9EFADE9B-2756-46EC-B677-880B5E0302D1}"
+	ProjectSection(SolutionItems) = preProject
+		tests\Directory.Build.props = tests\Directory.Build.props
+		tests\TestingSuppressions.cs = tests\TestingSuppressions.cs
+		tests\xunit.runner.json = tests\xunit.runner.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LanceC.DependencyGraph.Facts", "tests\DependencyGraph.Tests\LanceC.DependencyGraph.Facts.csproj", "{8AC2E926-B646-4AAC-941F-D94DB3E5A559}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +43,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{53FF4BFD-694C-4278-8268-985737A2401C} = {C3E9CEC7-A133-439A-9F42-EDB563B6A7BD}
+		{8AC2E926-B646-4AAC-941F-D94DB3E5A559} = {9EFADE9B-2756-46EC-B677-880B5E0302D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DCE702E8-D22B-4734-B27E-96FA737185E7}

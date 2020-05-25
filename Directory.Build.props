@@ -2,8 +2,7 @@
 <Project>
 
   <PropertyGroup>
-    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)DependencyGraph.ruleset</CodeAnalysisRuleSet>
-    <IsTestProject Condition="$(MSBuildProjectName.EndsWith('Facts'))">true</IsTestProject>
+    <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory).ruleset</CodeAnalysisRuleSet>
     <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
@@ -15,21 +14,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.7">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-  
-  <ItemGroup Condition=" '$(IsTestProject)' == 'true' ">
-    <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)xunit.runner.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <PackageReference Include="Moq.AutoMock" Version="1.2.0.120" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
-    <PackageReference Include="Moq" Version="4.13.1" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
