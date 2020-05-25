@@ -6,6 +6,10 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage(
     "Design",
+    "CA1034:Nested types should not be visible",
+    Justification = "Nested classes are used for methods in unit test classes.")]
+[assembly: SuppressMessage(
+    "Design",
     "CA1062:Validate arguments of public methods",
     Justification = "Test methods are not under the same constraints as typical public methods.")]
 [assembly: SuppressMessage(

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using LanceC.DependencyGraph.Internal.Abstractions;
 
-namespace LanceC.DependencyGraph.Tests.Testing
+namespace LanceC.DependencyGraph.Facts.Testing
 {
     [DebuggerDisplay("Value = {Value}")]
     internal class DummyNode<T> : INode<T>
