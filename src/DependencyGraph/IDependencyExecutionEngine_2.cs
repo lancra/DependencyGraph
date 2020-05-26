@@ -37,7 +37,7 @@ namespace LanceC.DependencyGraph
         /// <exception cref="DuplicateKeyException{TKey}">
         /// Thrown when the <paramref name="executions"/> contain one or more duplicate keys.
         /// </exception>
-        Task<IReadOnlyCollection<ExecutionResult<TKey, TResult>>> ExecuteAll(
+        Task<ExecutionResultCollection<TKey, TResult>> ExecuteAll(
             IEnumerable<IDependencyExecution<TKey, TResult>> executions,
             CancellationToken cancellationToken = default);
     }
