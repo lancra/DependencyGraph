@@ -121,17 +121,17 @@ namespace LanceC.DependencyGraph.Facts
                 var results = await sut.ExecuteAll(executions, default);
 
                 // Assert
-                Assert.Equal(3, results.Count);
+                Assert.Equal(3, results.Values.Count);
 
-                var firstResult = results.ElementAt(0);
+                var firstResult = results.Values.ElementAt(0);
                 Assert.Equal(executionMock3.Object.Key, firstResult.Key);
                 Assert.Equal("Three", firstResult.Result);
 
-                var secondResult = results.ElementAt(1);
+                var secondResult = results.Values.ElementAt(1);
                 Assert.Equal(executionMock2.Object.Key, secondResult.Key);
                 Assert.Equal("Two", secondResult.Result);
 
-                var thirdResult = results.ElementAt(2);
+                var thirdResult = results.Values.ElementAt(2);
                 Assert.Equal(executionMock1.Object.Key, thirdResult.Key);
                 Assert.Equal("One", thirdResult.Result);
             }

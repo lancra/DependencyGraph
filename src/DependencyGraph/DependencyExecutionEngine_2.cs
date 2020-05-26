@@ -23,7 +23,7 @@ namespace LanceC.DependencyGraph
             _dependencyExecutionSorter = dependencyExecutionSorter;
         }
 
-        public async Task<IReadOnlyCollection<ExecutionResult<TKey, TResult>>> ExecuteAll(
+        public async Task<ExecutionResultCollection<TKey, TResult>> ExecuteAll(
             IEnumerable<IDependencyExecution<TKey, TResult>> executions,
             CancellationToken cancellationToken = default)
         {
@@ -31,7 +31,7 @@ namespace LanceC.DependencyGraph
 
             var sortedExecutionKeys = _dependencyExecutionSorter.Sort(executions);
 
-            var results = new List<ExecutionResult<TKey, TResult>>();
+            var results = new ExecutionResultCollection<TKey, TResult>();
             foreach (var executionKey in sortedExecutionKeys)
             {
                 var execution = executions.Single(exec => exec.Key.Equals(executionKey));
