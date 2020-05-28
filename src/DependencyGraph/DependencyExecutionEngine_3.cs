@@ -13,7 +13,7 @@ namespace LanceC.DependencyGraph
         "StyleCop.CSharp.DocumentationRules",
         "SA1649:File name should match first type name",
         Justification = "Allow multiple instances of the same interface with different type parameters.")]
-    internal class DependencyExecutionEngine<TKey, TResult> : IDependencyExecutionEngine<TKey, TResult>
+    internal class DependencyExecutionEngine<TKey, TContext, TResult> : IDependencyExecutionEngine<TKey, TContext, TResult>
         where TKey : IEquatable<TKey>
     {
         private readonly IDependencyExecutionSorter<TKey> _dependencyExecutionSorter;
@@ -24,7 +24,8 @@ namespace LanceC.DependencyGraph
         }
 
         public async Task<ExecutionResultCollection<TKey, TResult>> ExecuteAll(
-            IEnumerable<IDependencyExecution<TKey, TResult>> executions,
+            TContext context,
+            IEnumerable<IDependencyExecution<TKey, TContext, TResult>> executions,
             CancellationToken cancellationToken = default)
         {
             Guard.NotNull(executions, nameof(executions));
@@ -36,7 +37,7 @@ namespace LanceC.DependencyGraph
             {
                 var execution = executions.Single(exec => exec.Key.Equals(executionKey));
                 var result = await execution
-                    .Execute(results, cancellationToken)
+                    .Execute(context, results, cancellationToken)
                     .ConfigureAwait(false);
 
                 var executionResult = new ExecutionResult<TKey, TResult>(executionKey, result);

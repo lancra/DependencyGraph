@@ -10,17 +10,20 @@ using Xunit;
 
 namespace LanceC.DependencyGraph.Facts
 {
-    public class DependencyExecutionEngine_2Facts
+    public class DependencyExecutionEngine_3Facts
     {
         private readonly AutoMocker _mocker = new AutoMocker();
 
-        private DependencyExecutionEngine<string, string> CreateSystemUnderTest()
-            => _mocker.CreateInstance<DependencyExecutionEngine<string, string>>();
+        private DependencyExecutionEngine<string, string, string> CreateSystemUnderTest()
+            => _mocker.CreateInstance<DependencyExecutionEngine<string, string, string>>();
 
-        private Mock<IDependencyExecution<TKey, TResult>> MockDependencyExecution<TKey, TResult>(TKey key, TResult result)
+        private Mock<IDependencyExecution<TKey, TContext, TResult>> MockDependencyExecution<TKey, TContext, TResult>(
+            TKey key,
+            TContext context,
+            TResult result)
             where TKey : IEquatable<TKey>
         {
-            var dependencyExecutionMock = new Mock<IDependencyExecution<TKey, TResult>>();
+            var dependencyExecutionMock = new Mock<IDependencyExecution<TKey, TContext, TResult>>();
             dependencyExecutionMock
                 .SetupGet(dependencyExecution => dependencyExecution.Key)
                 .Returns(key);
@@ -29,6 +32,7 @@ namespace LanceC.DependencyGraph.Facts
                 .Returns(Array.Empty<TKey>());
             dependencyExecutionMock
                 .Setup(dependencyExecution => dependencyExecution.Execute(
+                    context,
                     It.IsAny<ExecutionResultCollection<TKey, TResult>>(),
                     default))
                 .ReturnsAsync(result);
@@ -36,20 +40,22 @@ namespace LanceC.DependencyGraph.Facts
             return dependencyExecutionMock;
         }
 
-        public class TheExecuteAllMethod : DependencyExecutionEngine_2Facts
+        public class TheExecuteAllMethod : DependencyExecutionEngine_3Facts
         {
             [Fact]
             public async Task RunsExecutionsInOrder()
             {
                 // Arrange
-                var executionMock1 = MockDependencyExecution("1", "One");
-                var executionMock2 = MockDependencyExecution("2", "Two");
-                var executionMock3 = MockDependencyExecution("3", "Three");
+                var context = "foo";
+                var executionMock1 = MockDependencyExecution("1", context, "One");
+                var executionMock2 = MockDependencyExecution("2", context, "Two");
+                var executionMock3 = MockDependencyExecution("3", context, "Three");
 
                 var sequenceVerifier = new SequenceVerifier();
                 executionMock3
                     .InSequence(sequenceVerifier.Sequence)
                     .Setup(execution => execution.Execute(
+                        context,
                         It.Is<ExecutionResultCollection<string, string>>(results => results.Values.Count == 0),
                         default))
                     .ReturnsAsync("Three")
@@ -57,6 +63,7 @@ namespace LanceC.DependencyGraph.Facts
                 executionMock2
                     .InSequence(sequenceVerifier.Sequence)
                     .Setup(execution => execution.Execute(
+                        context,
                         It.Is<ExecutionResultCollection<string, string>>(results =>
                             results.Values.Count == 1 &&
                             results.Values.Any(result => result.Key == "3")),
@@ -66,6 +73,7 @@ namespace LanceC.DependencyGraph.Facts
                 executionMock1
                     .InSequence(sequenceVerifier.Sequence)
                     .Setup(execution => execution.Execute(
+                        context,
                         It.Is<ExecutionResultCollection<string, string>>(results =>
                             results.Values.Count == 2 &&
                             results.Values.Any(result => result.Key == "3") &&
@@ -94,12 +102,21 @@ namespace LanceC.DependencyGraph.Facts
                 var sut = CreateSystemUnderTest();
 
                 // Act
-                await sut.ExecuteAll(executions, default);
+                await sut.ExecuteAll(context, executions, default);
 
                 // Assert
-                executionMock1.Verify(execution => execution.Execute(It.IsAny<ExecutionResultCollection<string, string>>(), default));
-                executionMock2.Verify(execution => execution.Execute(It.IsAny<ExecutionResultCollection<string, string>>(), default));
-                executionMock3.Verify(execution => execution.Execute(It.IsAny<ExecutionResultCollection<string, string>>(), default));
+                executionMock1.Verify(execution => execution.Execute(
+                    context,
+                    It.IsAny<ExecutionResultCollection<string, string>>(),
+                    default));
+                executionMock2.Verify(execution => execution.Execute(
+                    context,
+                    It.IsAny<ExecutionResultCollection<string, string>>(),
+                    default));
+                executionMock3.Verify(execution => execution.Execute(
+                    context,
+                    It.IsAny<ExecutionResultCollection<string, string>>(),
+                    default));
                 sequenceVerifier.VerifyAll();
             }
 
@@ -107,9 +124,10 @@ namespace LanceC.DependencyGraph.Facts
             public async Task ReturnsExpectedExecutionResults()
             {
                 // Arrange
-                var executionMock1 = MockDependencyExecution("1", "One");
-                var executionMock2 = MockDependencyExecution("2", "Two");
-                var executionMock3 = MockDependencyExecution("3", "Three");
+                var context = "foo";
+                var executionMock1 = MockDependencyExecution("1", context, "One");
+                var executionMock2 = MockDependencyExecution("2", context, "Two");
+                var executionMock3 = MockDependencyExecution("3", context, "Three");
 
                 var executions = new[]
                 {
@@ -131,7 +149,7 @@ namespace LanceC.DependencyGraph.Facts
                 var sut = CreateSystemUnderTest();
 
                 // Act
-                var results = await sut.ExecuteAll(executions, default);
+                var results = await sut.ExecuteAll(context, executions, default);
 
                 // Assert
                 Assert.Equal(3, results.Values.Count);
@@ -167,7 +185,7 @@ namespace LanceC.DependencyGraph.Facts
             public async Task ThrowsDuplicateKeyExceptionWhenDependencyExecutionSorterThrowsDuplicateKeyException()
             {
                 // Arrange
-                var executions = Array.Empty<IDependencyExecution<string, string>>();
+                var executions = Array.Empty<IDependencyExecution<string, string, string>>();
 
                 _mocker.GetMock<IDependencyExecutionSorter<string>>()
                     .Setup(dependencyExecutionSorter => dependencyExecutionSorter.Sort(executions))
@@ -176,7 +194,7 @@ namespace LanceC.DependencyGraph.Facts
                 var sut = CreateSystemUnderTest();
 
                 // Act
-                var exception = await Record.ExceptionAsync(async () => await sut.ExecuteAll(executions, default));
+                var exception = await Record.ExceptionAsync(async () => await sut.ExecuteAll("foo", executions, default));
 
                 // Assert
                 Assert.NotNull(exception);
@@ -187,7 +205,7 @@ namespace LanceC.DependencyGraph.Facts
             public async Task ThrowsCircularDependenciesExceptionWhenDependencyExecutionSorterThrowsCircularDependenciesException()
             {
                 // Arrange
-                var executions = Array.Empty<IDependencyExecution<string, string>>();
+                var executions = Array.Empty<IDependencyExecution<string, string, string>>();
 
                 _mocker.GetMock<IDependencyExecutionSorter<string>>()
                     .Setup(dependencyExecutionSorter => dependencyExecutionSorter.Sort(executions))
@@ -196,7 +214,7 @@ namespace LanceC.DependencyGraph.Facts
                 var sut = CreateSystemUnderTest();
 
                 // Act
-                var exception = await Record.ExceptionAsync(async () => await sut.ExecuteAll(executions, default));
+                var exception = await Record.ExceptionAsync(async () => await sut.ExecuteAll("foo", executions, default));
 
                 // Assert
                 Assert.NotNull(exception);
