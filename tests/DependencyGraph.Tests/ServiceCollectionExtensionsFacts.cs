@@ -82,6 +82,21 @@ namespace LanceC.DependencyGraph.Facts
                 var dependencyExecutionEngine = serviceProvider.GetService<IDependencyExecutionEngine<string, string>>();
                 Assert.NotNull(dependencyExecutionEngine);
             }
+
+            [Fact]
+            public void RegistersDependencyExecutionEngineOfThreeTypes()
+            {
+                // Arrange
+                var services = new ServiceCollection();
+
+                // Act
+                services.AddDependencyGraph();
+
+                // Assert
+                var serviceProvider = services.BuildServiceProvider();
+                var dependencyExecutionEngine = serviceProvider.GetService<IDependencyExecutionEngine<string, string, string>>();
+                Assert.NotNull(dependencyExecutionEngine);
+            }
         }
     }
 }

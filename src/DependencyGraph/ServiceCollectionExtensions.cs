@@ -20,6 +20,7 @@ namespace LanceC.DependencyGraph
             .AddTransient(typeof(IDependencyExecutionSorter<>), typeof(DependencyExecutionSorter<>))
             .AddTransient(typeof(IGraphFactory<>), typeof(GraphFactory<>))
             .AddTransient(typeof(IDependencyExecutionEngine<>), typeof(DependencyExecutionEngine<>))
-            .AddTransient(typeof(IDependencyExecutionEngine<,>), typeof(DependencyExecutionEngine<,>));
+            .AddTransient(typeof(IDependencyExecutionEngine<,>), typeof(DependencyExecutionEngine<,>))
+            .AddTransient(typeof(IDependencyExecutionEngine<,,>), typeof(DependencyExecutionEngine<,,>));
     }
 }

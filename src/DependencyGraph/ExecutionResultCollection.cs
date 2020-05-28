@@ -1,9 +1,3 @@
-// -------------------------------------------------------------------------------------------------
-// <copyright file="ExecutionResultCollection.cs" company="LanceC">
-// Copyright (c) LanceC. All rights reserved.
-// </copyright>
-// -------------------------------------------------------------------------------------------------
-
 using System.Collections.Generic;
 using System.Linq;
 
